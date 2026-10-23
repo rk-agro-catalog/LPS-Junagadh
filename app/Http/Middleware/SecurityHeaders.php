@@ -30,7 +30,10 @@ class SecurityHeaders
         // 5. Cross-Site Scripting Protection filter
         $response->headers->set('X-XSS-Protection', '1; mode=block');
 
-        // 6. Hide server technology info (PHP version fingerprinting)
+        // 6. Force all mixed content requests (CSS, JS, images) to HTTPS
+        $response->headers->set('Content-Security-Policy', 'upgrade-insecure-requests');
+
+        // 7. Hide server technology info (PHP version fingerprinting)
         if (function_exists('header_remove')) {
             @header_remove('X-Powered-By');
         }

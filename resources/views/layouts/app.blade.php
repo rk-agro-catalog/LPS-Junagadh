@@ -2,6 +2,7 @@
 <html lang="gu">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>@yield('title', 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ') | LPS Junagadh</title>
     <meta name="description" content="શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ (LPS Junagadh) સત્તાવાર પોર્ટલ. પ્રમુખ સેવા સંકલ્પ વિભાગ-૧ & વિભાગ-૨, ભૂમિદાન યોજના (રૂા. ૨૫૦૦/- પ્રતિ ચોરસ વાર), હોલ-પ્લોટ બુકિંગ.">
