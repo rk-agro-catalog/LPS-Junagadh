@@ -41,15 +41,15 @@
     </div>
 
     <!-- Sardar Patel Inspiration Card -->
-    <div style="background: linear-gradient(135deg, #1c1917 0%, #292524 100%); color: #fff; border-radius: var(--radius-xl); padding: 3rem; text-align: center; border: 2px solid var(--color-primary-light);">
-        <i class="ri-medal-fill" style="font-size: 3rem; color: var(--color-gold);"></i>
-        <h3 style="font-size: 1.8rem; font-weight: 800; margin: 1rem 0 0.5rem; color: #fef08a;">
+    <div style="background: linear-gradient(135deg, #1c1917 0%, #292524 100%); color: #fff; border-radius: var(--radius-xl); padding: clamp(2rem, 4vw, 3rem); text-align: center; border: 2px solid var(--color-primary-light);">
+        <i class="ri-medal-fill" style="font-size: 2.8rem; color: var(--color-gold);"></i>
+        <h3 style="font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-weight: 700; margin: 0.85rem 0 0.4rem; color: #fef08a;">
             "સંગઠન એ જ આપણી સૌથી મોટી તાકાત છે"
         </h3>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: #e7e5e4; max-width: 800px; margin: 0 auto 1.5rem;">
+        <p style="font-size: 1.05rem; line-height: 1.8; color: #e7e5e4; max-width: 800px; margin: 0 auto 1.5rem;">
             સરદાર વલ્લભભાઈ પટેલના આદર્શો અને માઁ ખોડલના આશીર્વાદ સાથે જૂનાગઢ લેઉવા પટેલ સમાજ તમામ જ્ઞાતિજનોના શિક્ષણ, સંસ્કાર અને સુખાકારી માટે કટિબદ્ધ છે.
         </p>
-        <a href="{{ route('bhumidan') }}" class="btn btn-primary" style="font-size: 1rem;">
+        <a href="{{ route('bhumidan') }}" class="btn btn-primary" style="font-size: 0.95rem; font-weight: 600;">
             <i class="ri-heart-3-fill"></i> સંકુલ નિર્માણમાં સહયોગ કરો
         </a>
     </div>

@@ -41,7 +41,7 @@
     <div class="page-split-grid">
         <!-- Left: Online Pledge Form with Live Calculator -->
         <div class="form-card">
-            <h2 style="font-size: clamp(1.25rem, 3vw, 1.55rem); color: var(--color-maroon); font-weight:800; margin-bottom: 0.35rem;">
+            <h2 style="font-size: clamp(1.2rem, 2.5vw, 1.45rem); color: var(--color-maroon); font-weight: 650; margin-bottom: 0.35rem;">
                 ઓનલાઇન ભૂમિદાન સંકલ્પ ફોર્મ
             </h2>
             <p style="font-size: clamp(0.85rem, 2vw, 0.95rem); color: var(--color-text-muted); margin-bottom: 1.25rem;">
@@ -63,10 +63,23 @@
                 </div>
             </div>
 
-            <!-- Live Calculation Display -->
+            <!-- Live Calculation Display & 1-Click UPI Pay -->
             <div class="calc-result-box" style="margin-bottom: 1.25rem;">
-                <div style="font-size: 0.82rem; font-weight: 700; color: #854d0e;">કુલ સહયોગ રાશિ :</div>
+                <div style="font-size: 0.82rem; font-weight: 600; color: #854d0e;">કુલ સહયોગ રાશિ :</div>
                 <div class="calc-amount" id="calcAmountDisplay">₹ 2,500/-</div>
+            </div>
+
+            <!-- Instant Mobile UPI 1-Click Pay Action (Mobile Only) -->
+            <div class="mobile-only" style="margin-bottom: 1.5rem; background: #ecfdf5; border: 1.5px solid #10b981; border-radius: var(--radius-md); padding: 1rem; text-align: center; flex-direction: column;">
+                <div style="font-size: 0.85rem; font-weight: 600; color: #065f46; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+                    <i class="ri-smartphone-line" style="font-size: 1.1rem;"></i> મોબાઈલ દ્વારા ૧-ક્લિક UPI પેમેન્ટ
+                </div>
+                <a id="dynamicUpiPayBtn" href="upi://pay?pa=9093390934@sbi&pn=Shree%20Samast%20Leuva%20Patel%20Samaj%20Trust&am=2500&cu=INR&tn=LPS%20Junagadh%20Bhumidan%20(1%20Yards)" class="btn btn-primary" style="width: 100%; background: #059669; border-color: #059669; font-size: 0.95rem; padding: 0.65rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600;">
+                    <i class="ri-wallet-3-line"></i> UPI એપથી ચુકવો (GPay / PhonePe / Paytm)
+                </a>
+                <div style="font-size: 0.75rem; color: #047857; margin-top: 0.4rem;">
+                    ચુકવણી પૂર્ણ થયા બાદ નીચે ફોર્મમાં Transaction ID લખી સબમિટ કરો
+                </div>
             </div>
 
             <form action="{{ route('bhumidan.store') }}" method="POST">
@@ -129,43 +142,52 @@
         <!-- Right: Official Bank Account & UPI QR Details -->
         <div>
             <div style="background: var(--gradient-royal); color: #fff; padding: clamp(1.25rem, 3vw, 1.75rem); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;">
-                <h3 style="font-size: clamp(1.1rem, 2.5vw, 1.25rem); font-weight: 800; margin-bottom: 0.4rem; color: #fef08a;">
+                <h3 style="font-size: clamp(1.05rem, 2.2vw, 1.2rem); font-weight: 650; margin-bottom: 0.4rem; color: #fef08a !important;">
                     <i class="ri-bank-line"></i> સત્તાવાર બેંક એકાઉન્ટ
                 </h3>
-                <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 1rem;">
+                <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.92) !important; margin-bottom: 1rem;">
                     ટ્રસ્ટના અધિકૃત બેંક ખાતામાં સીધા RTGS / NEFT / ચેક જમા કરાવી શકાય છે.
                 </p>
 
-                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); font-size: 0.88rem; line-height: 1.7; backdrop-filter: blur(6px);">
-                    <div><strong>ખાતાનું નામ:</strong><br>શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ</div>
-                    <div style="margin-top: 0.4rem;"><strong>બેંક:</strong> State Bank of India (SBI)</div>
-                    <div><strong>ખાતા નંબર:</strong> <span style="color: #fef08a; font-weight:800;">909339093401</span></div>
-                    <div><strong>IFSC કોડ:</strong> SBIN0001234</div>
-                    <div><strong>શાખા:</strong> જૂનાગઢ મેઈન બ્રાન્ચ</div>
+                <div style="background: rgba(255,255,255,0.12); padding: 1rem; border-radius: var(--radius-md); font-size: 0.88rem; line-height: 1.7; backdrop-filter: blur(6px); color: #ffffff;">
+                    <div><strong style="color: #fef08a !important;">ખાતાનું નામ:</strong><br><span style="color: #ffffff;">શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ</span></div>
+                    <div style="margin-top: 0.4rem;"><strong style="color: #fef08a !important;">બેંક:</strong> <span style="color: #ffffff;">State Bank of India (SBI)</span></div>
+                    <div><strong style="color: #fef08a !important;">ખાતા નંબર:</strong> <span style="color: #fef08a; font-weight: 700; font-family: var(--font-latin);">909339093401</span></div>
+                    <div><strong style="color: #fef08a !important;">IFSC કોડ:</strong> <span style="color: #ffffff; font-family: var(--font-latin);">SBIN0001234</span></div>
+                    <div><strong style="color: #fef08a !important;">શાખા:</strong> <span style="color: #ffffff;">જૂનાગઢ મેઈન બ્રાન્ચ</span></div>
                 </div>
             </div>
 
             <!-- UPI QR Code Block -->
             <div style="background: #fff; border: 2px dashed var(--color-gold); border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, 1.75rem); text-align: center; box-shadow: var(--shadow-sm);">
-                <span class="badge badge-gold" style="margin-bottom: 0.5rem;">ડાયરેક્ટ UPI પેમેન્ટ</span>
-                <h3 style="font-size: clamp(1.05rem, 2.5vw, 1.2rem); font-weight:800; color: var(--color-maroon);">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span class="badge badge-gold">ડાયરેક્ટ UPI પેમેન્ટ</span>
+                    <span class="badge" id="upiQrAmountBadge" style="background: #ecfdf5; color: #047857; font-weight: 600; border: 1px solid #a7f3d0; font-family: var(--font-latin);">₹ 2,500/-</span>
+                </div>
+                <h3 style="font-size: clamp(1.05rem, 2.2vw, 1.18rem); font-weight: 650; color: var(--color-maroon);">
                     કોઈપણ UPI એપથી સ્કેન કરો
                 </h3>
 
-                <div style="margin: 1rem auto; width: 150px; height: 150px; background: #fff; border: 1.5px solid var(--color-border); border-radius: var(--radius-md); padding: 8px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi%3A%2F%2Fpay%3Fpa%3D9093390934%40sbi%26pn%3DShree%2520Samast%2520Leuva%2520Patel%2520Samaj%2520Trust%26cu%3DINR" alt="UPI QR Code" style="width: 134px; height: 134px;">
+                <div style="margin: 1rem auto; width: 160px; height: 160px; background: #fff; border: 1.5px solid var(--color-border); border-radius: var(--radius-md); padding: 8px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm);">
+                    <img id="dynamicUpiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3D9093390934%40sbi%26pn%3DShree%2520Samast%2520Leuva%2520Patel%2520Samaj%2520Trust%26am%3D2500%26cu%3DINR%26tn%3DLPS%20Junagadh%20Bhumidan" alt="UPI QR Code" style="width: 144px; height: 144px;">
                 </div>
 
-                <div style="font-weight: 700; color: var(--color-text-main); font-size: 0.9rem;">
-                    UPI ID: <span style="color: var(--color-primary-light);">9093390934@sbi</span>
-                </div>
-                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.2rem;">
-                    Google Pay • PhonePe • Paytm • BHIM
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+                    <div style="font-weight: 600; color: var(--color-text-main); font-size: 0.92rem;">
+                        UPI ID: <span style="color: var(--color-primary-light);">9093390934@sbi</span>
+                    </div>
+                    <button type="button" onclick="copyUpiId('9093390934@sbi', this)" class="btn btn-outline-gold" style="padding: 0.2rem 0.6rem; font-size: 0.75rem; border-radius: var(--radius-pill); font-weight: 600;">
+                        <i class="ri-file-copy-line"></i> કોપી કરો
+                    </button>
                 </div>
 
-                <div style="margin-top: 1rem;">
-                    <a href="https://wa.me/919093390934?text={{ urlencode('મેં શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ જૂનાગઢમાં ભૂમિદાન કર્યું છે. તેની રસીદ મોકલવા વિનંતી.') }}" target="_blank" class="btn btn-outline-gold" style="width: 100%; font-size: 0.82rem; padding: 0.5rem 0.75rem;">
-                        <i class="ri-whatsapp-line"></i> સ્ક્રીનશોટ વોટ્સએપ કરો
+                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+                    Google Pay • PhonePe • Paytm • BHIM • Amazon Pay
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <a href="https://wa.me/919093390934?text={{ urlencode('જય સરદાર. મેં શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ જૂનાગઢ સંકુલ નિર્માણ માટે ભૂમિદાન આપેલ છે. કૃપા કરીને રસીદ મોકલવા વિનંતી.') }}" target="_blank" class="btn btn-outline-gold" style="width: 100%; font-size: 0.85rem; padding: 0.55rem 0.75rem; color: #15803d; border-color: #86efac; background: #f0fdf4;">
+                        <i class="ri-whatsapp-line"></i> પેમેન્ટ સ્ક્રીનશોટ વોટ્સએપ કરો
                     </a>
                 </div>
             </div>

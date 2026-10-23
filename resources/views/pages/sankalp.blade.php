@@ -22,7 +22,7 @@
         <div style="display: flex; gap: 1rem; align-items: flex-start;">
             <i class="ri-double-quotes-l" style="font-size: 2rem; color: var(--color-primary-light); line-height: 1; flex-shrink: 0;"></i>
             <div>
-                <h2 style="font-size: clamp(1.1rem, 2.5vw, 1.3rem); color: #92400e; font-weight:800; margin-bottom: 0.4rem;">
+                <h2 style="font-size: clamp(1.1rem, 2.5vw, 1.25rem); color: #92400e; font-weight:700; margin-bottom: 0.4rem;">
                     વિશેષ સેવા સંકલ્પનું હૃદયસ્પર્શી વિઝન :
                 </h2>
                 <p style="font-size: clamp(0.92rem, 2vw, 1.08rem); line-height: 1.7; color: #78350f;">
@@ -193,7 +193,7 @@
 
     <!-- Location & River Bank Ambience -->
     <div style="background: var(--color-surface); border-radius: var(--radius-lg); padding: 3rem; text-align: center;">
-        <h3 style="font-size: 1.8rem; font-weight:800; color: var(--color-maroon); margin-bottom: 1rem;">
+        <h3 style="font-size: clamp(1.3rem, 2.5vw, 1.65rem); font-weight:700; color: var(--color-maroon); margin-bottom: 0.85rem;">
             પ્રકૃતિના સાન્નિધ્યમાં સોનરખ નદીના તટે
         </h3>
         <p style="font-size: 1.05rem; color: var(--color-text-muted); max-width: 750px; margin: 0 auto 1.5rem; line-height: 1.8;">

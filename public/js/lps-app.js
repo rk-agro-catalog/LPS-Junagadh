@@ -11,20 +11,32 @@ document.addEventListener('DOMContentLoaded', function () {
   const mobileDrawer = document.getElementById('mobileDrawer');
   const drawerCloseBtn = document.getElementById('drawerCloseBtn');
 
-  function openDrawer() {
-    if (mobileDrawer && drawerOverlay) {
-      mobileDrawer.classList.add('active');
-      drawerOverlay.classList.add('active');
+  window.openMobileDrawer = function () {
+    const drawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+    if (drawer && overlay) {
+      drawer.classList.add('active');
+      overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
+  };
+
+  window.closeMobileDrawer = function () {
+    const drawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+    if (drawer && overlay) {
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  function openDrawer() {
+    window.openMobileDrawer();
   }
 
   function closeDrawer() {
-    if (mobileDrawer && drawerOverlay) {
-      mobileDrawer.classList.remove('active');
-      drawerOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    window.closeMobileDrawer();
   }
 
   if (mobileToggle) {
@@ -83,6 +95,32 @@ document.addEventListener('DOMContentLoaded', function () {
     if (formYardInput) formYardInput.value = yards;
     if (formAmountInput) formAmountInput.value = total;
 
+    // Update dynamic UPI intent pay button
+    const dynamicUpiBtn = document.getElementById('dynamicUpiPayBtn');
+    if (dynamicUpiBtn) {
+      const upiUrl = `upi://pay?pa=9093390934@sbi&pn=Shree%20Samast%20Leuva%20Patel%20Samaj%20Trust&am=${total}&cu=INR&tn=LPS%20Junagadh%20Bhumidan%20(${yards}%20Yards)`;
+      dynamicUpiBtn.href = upiUrl;
+    }
+
+    const homeDynamicUpi = document.getElementById('homeDynamicUpiBtn');
+    if (homeDynamicUpi) {
+      const homeUpiUrl = `upi://pay?pa=9093390934@sbi&pn=Shree%20Samast%20Leuva%20Patel%20Samaj%20Trust&am=${total}&cu=INR&tn=LPS%20Junagadh%20Bhumidan%20(${yards}%20Yards)`;
+      homeDynamicUpi.href = homeUpiUrl;
+    }
+
+    // Update dynamic UPI QR Code image
+    const dynamicQrImg = document.getElementById('dynamicUpiQrImg');
+    if (dynamicQrImg) {
+      const qrData = encodeURIComponent(`upi://pay?pa=9093390934@sbi&pn=Shree Samast Leuva Patel Samaj Trust&am=${total}&cu=INR&tn=LPS Junagadh Bhumidan`);
+      dynamicQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrData}`;
+    }
+
+    // Update QR amount text badge
+    const qrAmountBadge = document.getElementById('upiQrAmountBadge');
+    if (qrAmountBadge) {
+      qrAmountBadge.innerText = formatIndianCurrency(total) + '/-';
+    }
+
     // Update active state on buttons
     pillButtons.forEach(btn => {
       if (parseInt(btn.dataset.yards) === yards) {
@@ -105,6 +143,11 @@ document.addEventListener('DOMContentLoaded', function () {
     yardInput.addEventListener('input', function () {
       updateCalculation(this.value);
     });
+  }
+
+  // Initial calculation trigger if elements present
+  if (yardInput) {
+    updateCalculation(yardInput.value || 1);
   }
 
   // 3. Facility Section Auto-populate in Booking Page
@@ -152,3 +195,45 @@ document.addEventListener('DOMContentLoaded', function () {
 function printReceipt() {
   window.print();
 }
+
+// 1-Click Clipboard Copy with UI feedback
+function copyUpiId(text, btnElement) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      const originalHtml = btnElement.innerHTML;
+      btnElement.innerHTML = '<i class="ri-check-line"></i> કોપી થઈ ગયું!';
+      btnElement.style.borderColor = '#16a34a';
+      btnElement.style.color = '#16a34a';
+      setTimeout(() => {
+        btnElement.innerHTML = originalHtml;
+        btnElement.style.borderColor = '';
+        btnElement.style.color = '';
+      }, 2500);
+    });
+  } else {
+    // Fallback for older browsers
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert('UPI ID કોપી થઈ ગયું: ' + text);
+  }
+}
+
+// Native Web Share API with WhatsApp Fallback
+function shareReceiptNative(title, text, url, fallbackWhatsappUrl) {
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: text,
+      url: url
+    }).catch(err => {
+      console.log('Share canceled or failed', err);
+    });
+  } else if (fallbackWhatsappUrl) {
+    window.open(fallbackWhatsappUrl, '_blank');
+  }
+}
+

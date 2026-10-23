@@ -9,11 +9,12 @@
     <div class="container hero-grid">
         <div class="hero-left">
             <div class="hero-tagline">
-                <i class="ri-fire-fill" style="color: #f59e0b;"></i>
-                <span>શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ પ્રસ્તુત</span>
+                <i class="ri-shield-star-fill" style="color: var(--color-gold-bright);"></i>
+                <span>॥ સંગઠન એ જ શક્તિ ॥ • શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ</span>
             </div>
             <h1 class="hero-title">
-                સમાજ ગૌરવ અને સેવા સંકલ્પનું <span>ભવ્ય સંકુલ નિર્માણ</span>
+                <span class="hero-title-main" style="color: #ffffff !important; display: inline-block;">સમાજ ગૌરવ અને સેવા સંકલ્પનું</span>
+                <span>ભવ્ય સંકુલ નિર્માણ</span>
             </h1>
             <p class="hero-description">
                 જૂનાગઢ બાયપાસ, ખલીલપુર ચોકડી પાસે, પવિત્ર સોનરખ નદીના કાંઠે સમસ્ત લેઉવા પટેલ જ્ઞાતિજનોના શુભ પ્રસંગો અને સામાજિક ઉત્કર્ષ માટે ભવ્ય સંકુલનું નિર્માણ થઈ રહ્યું છે.
@@ -48,15 +49,15 @@
         <div class="hero-right">
             <div class="hero-card">
                 <div class="hero-card-header">
-                    <span class="hero-card-badge">પવિત્ર ભૂમિદાન યોજના</span>
-                    <h3 style="margin-top: 0.5rem;">એક ચોરસ વાર ભૂમિદાન</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.2rem;">
+                    <span class="badge badge-gold"><i class="ri-hand-heart-fill"></i> પવિત્ર ભૂમિદાન યોજના</span>
+                    <h3 style="margin-top: 0.45rem; font-size: 1.15rem; font-weight: 650; color: var(--color-maroon);">એક ચોરસ વાર ભૂમિદાન</h3>
+                    <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.15rem;">
                         માત્ર રૂા. ૨૫૦૦/- માં આપ પણ સંકુલ નિર્માણમાં ભાગીદાર બનો
                     </p>
                 </div>
 
-                <div style="margin-bottom: 0.85rem;">
-                    <label style="font-size: 0.85rem; font-weight:700; color: var(--color-text-muted);">વાર પસંદ કરો:</label>
+                <div style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.82rem; font-weight:600; color: var(--color-text-muted);">વાર પસંદ કરો:</label>
                     <div class="calc-pill-group">
                         <button type="button" class="calc-pill-btn active" data-yards="1">૧ વાર</button>
                         <button type="button" class="calc-pill-btn" data-yards="2">૨ વાર</button>
@@ -69,11 +70,16 @@
                     </div>
                 </div>
 
-                <div class="calc-result-box">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #854d0e; text-transform: uppercase;">કુલ સહયોગ રાશિ</div>
+                <div class="calc-result-box" style="margin-bottom: 0.75rem;">
+                    <div style="font-size: 0.8rem; font-weight: 600; color: #854d0e; text-transform: uppercase;">કુલ સહયોગ રાશિ</div>
                     <div class="calc-amount" id="calcAmountDisplay">₹ 2,500/-</div>
-                    <div style="font-size: 0.78rem; color: #a16207; margin-top: 0.25rem;">(૧ ચોરસ વાર જગ્યાનું ભૂમિદાન)</div>
+                    <div style="font-size: 0.75rem; color: #a16207; margin-top: 0.2rem;">(૧ ચોરસ વાર જગ્યાનું ભૂમિદાન)</div>
                 </div>
+
+                <!-- Instant UPI button for mobile devices -->
+                <a id="homeDynamicUpiBtn" href="upi://pay?pa=9093390934@sbi&pn=Shree%20Samast%20Leuva%20Patel%20Samaj%20Trust&am=2500&cu=INR&tn=LPS%20Junagadh%20Bhumidan%20(1%20Yards)" class="btn mobile-only" style="width: 100%; background: #059669; color: #fff; font-size: 0.88rem; padding: 0.55rem; align-items: center; justify-content: center; gap: 0.4rem; border-radius: var(--radius-md); margin-bottom: 0.75rem; font-weight: 600;">
+                    <i class="ri-smartphone-line"></i> ૧-ક્લિક UPI થી ચુકવો (GPay / PhonePe)
+                </a>
 
                 <form action="{{ route('bhumidan.store') }}" method="POST">
                     @csrf
@@ -81,22 +87,95 @@
                     <input type="hidden" name="payment_method" value="UPI">
                     <input type="hidden" name="city" value="જૂનાગઢ">
                     
-                    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;">
-                        <input type="text" name="donor_name" class="form-control" placeholder="તમારું પૂરું નામ (દાતાશ્રી)" required>
-                        <input type="tel" name="phone" class="form-control" placeholder="મોબાઈલ નંબર" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.75rem;">
+                        <input type="text" name="donor_name" class="form-control" placeholder="તમારું પૂરું નામ (દાતાશ્રી)" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
+                        <input type="tel" name="phone" class="form-control" placeholder="મોબાઈલ નંબર" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.75rem;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 0.92rem; padding: 0.62rem; font-weight: 600;">
                         <i class="ri-check-double-line"></i> ભૂમિદાન સંકલ્પ નોંધાવો
                     </button>
                 </form>
                 
-                <div style="text-align: center; margin-top: 0.75rem;">
-                    <a href="{{ route('bhumidan') }}" style="font-size: 0.82rem; color: var(--color-primary-dark); font-weight: 700; text-decoration: underline;">
+                <div style="text-align: center; margin-top: 0.65rem;">
+                    <a href="{{ route('bhumidan') }}" style="font-size: 0.82rem; color: var(--color-primary-dark); font-weight: 600; text-decoration: underline;">
                         સંપૂર્ણ દાતા યાદી & બેંક વિગતો જુઓ <i class="ri-arrow-right-line"></i>
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile App Quick Actions Launcher -->
+<section class="app-quick-actions-section">
+    <div class="container">
+        <div class="app-quick-grid">
+            <a href="{{ route('bhumidan') }}" class="app-action-card">
+                <div class="app-action-icon gold-grad">
+                    <i class="ri-hand-heart-fill"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>૧ વાર ભૂમિદાન</strong>
+                    <span>રૂા. ૨,૫૦૦/- સહયોગ</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
+
+            <a href="{{ route('booking') }}" class="app-action-card">
+                <div class="app-action-icon maroon-grad">
+                    <i class="ri-building-line"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>હોલ & પ્લોટ બુકિંગ</strong>
+                    <span>વિભાગ ૧ & ૨ પ્રસંગ</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
+
+            <a href="{{ route('sankalp') }}" class="app-action-card">
+                <div class="app-action-icon amber-grad">
+                    <i class="ri-service-line"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>સેવા સંકલ્પ દર્શન</strong>
+                    <span>સંકુલ સુવિધાઓ</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
+
+            <a href="{{ route('events') }}" class="app-action-card">
+                <div class="app-action-icon emerald-grad">
+                    <i class="ri-calendar-event-line"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>સમાજ કાર્યક્રમો</strong>
+                    <span>ઉત્સવ & સ્નેહમિલન</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
+
+            <a href="{{ route('membership') }}" class="app-action-card">
+                <div class="app-action-icon blue-grad">
+                    <i class="ri-team-line"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>જ્ઞાતિ ડિરેક્ટરી</strong>
+                    <span>સભ્ય નોંધણી & સર્ચ</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
+
+            <a href="{{ route('gallery') }}" class="app-action-card">
+                <div class="app-action-icon rose-grad">
+                    <i class="ri-gallery-fill"></i>
+                </div>
+                <div class="app-action-text">
+                    <strong>ફોટો & રીલ્સ</strong>
+                    <span>સંકલ્પ યાત્રા વિડીયો</span>
+                </div>
+                <i class="ri-arrow-right-s-line app-action-arrow"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -117,7 +196,7 @@
             <div class="sankalp-card">
                 <div class="sankalp-header">
                     <div class="badge badge-gold" style="position: absolute; top: 1.25rem; right: 1.5rem;">મેગા ઇવેન્ટ્સ</div>
-                    <h3>પ્રમુખ સેવા સંકલ્પ : વિભાગ-૧</h3>
+                    <h3 style="color: #ffffff !important;">પ્રમુખ સેવા સંકલ્પ : વિભાગ-૧</h3>
                     <p>મોટા લગ્ન સમારંભો, સામાજિક સંમેલનો અને ભવ્ય ઉત્સવો માટે</p>
                 </div>
                 <div class="sankalp-body">
@@ -171,7 +250,7 @@
             <div class="sankalp-card">
                 <div class="sankalp-header section-two">
                     <div class="badge badge-gold" style="position: absolute; top: 1.25rem; right: 1.5rem;">ખાસ આયોજન</div>
-                    <h3>વિશેષ સેવા સંકલ્પ : વિભાગ-૨</h3>
+                    <h3 style="color: #ffffff !important;">વિશેષ સેવા સંકલ્પ : વિભાગ-૨</h3>
                     <p>નાના તથા મધ્યમ વર્ગના જ્ઞાતિજનો માટે વિશેષ સુવિધા</p>
                 </div>
                 <div class="sankalp-body">
@@ -227,6 +306,70 @@
     </div>
 </section>
 
+<!-- Upcoming Events Section -->
+@if(isset($upcomingEvents) && $upcomingEvents->count() > 0)
+<section style="background: var(--color-bg-ivory); padding: clamp(2rem, 5vw, 3.5rem) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <span class="badge badge-gold" style="margin-bottom: 0.4rem;">
+                    <i class="ri-calendar-event-fill"></i> સમાજ ઉત્સવ કેલેન્ડર
+                </span>
+                <h2 style="font-size: clamp(1.3rem, 2.5vw, 1.85rem); font-weight: 700; color: var(--color-maroon); line-height: 1.3;">
+                    આગામી સમાજ કાર્યક્રમો & ઉત્સવો
+                </h2>
+                <p style="font-size: 0.92rem; color: var(--color-text-muted); margin-top: 0.35rem;">
+                    શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ દ્વારા આયોજિત પાવન સામાજિક આયોજન.
+                </p>
+            </div>
+            <div>
+                <a href="{{ route('events') }}" class="btn btn-outline-gold" style="font-size: 0.88rem; font-weight: 600;">
+                    તમામ કાર્યક્રમો જુઓ <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            @foreach($upcomingEvents as $evt)
+                <div style="background: #fff; border-radius: var(--radius-lg); border: 1.5px solid var(--color-border); overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+                    @if($evt->image_url)
+                        <div style="height: 180px; position: relative; overflow: hidden;">
+                            <img src="{{ $evt->image_url }}" alt="{{ $evt->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <span class="badge badge-gold" style="position: absolute; top: 0.75rem; right: 0.75rem;">{{ $evt->category }}</span>
+                        </div>
+                    @else
+                        <div style="height: 100px; background: var(--gradient-royal); display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem;">
+                            <i class="ri-calendar-event-line" style="font-size: 2rem; color: #fef08a;"></i>
+                            <span class="badge badge-gold">{{ $evt->category }}</span>
+                        </div>
+                    @endif
+                    <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; color: var(--color-primary-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            <span><i class="ri-calendar-2-line"></i> {{ $evt->event_date->format('d M, Y') }}</span>
+                            @if($evt->event_time)
+                                <span><i class="ri-time-line"></i> {{ $evt->event_time }}</span>
+                            @endif
+                        </div>
+                        <h3 style="font-size: 1.05rem; font-weight: 650; color: var(--color-maroon); line-height: 1.35; margin-bottom: 0.5rem;">
+                            {{ $evt->title }}
+                        </h3>
+                        <div style="font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 0.85rem;">
+                            <i class="ri-map-pin-line" style="color: var(--color-primary-light);"></i> {{ Str::limit($evt->venue, 45) }}
+                        </div>
+                        <div style="margin-top: auto; border-top: 1px dashed var(--color-border); padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; color: #6b7280;">{{ Str::limit($evt->organizer, 28) }}</span>
+                            <a href="{{ route('events') }}" style="font-size: 0.82rem; font-weight: 600; color: var(--color-primary-dark); text-decoration: underline;">
+                                વિગતો જુઓ <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 <!-- Bhumidan Callout Banner -->
 <section style="padding: 1rem 0 4rem;">
     <div class="container">
@@ -236,8 +379,8 @@
                     <span class="badge badge-gold" style="font-size: 0.85rem; margin-bottom: 0.75rem;">
                         <i class="ri-hand-heart-fill"></i> પવિત્ર સહયોગ આહ્વાન
                     </span>
-                    <h2>એક ચોરસ વાર જગ્યાનું ભૂમિદાન <span>રૂા. ૨૫૦૦/-</span></h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: #f5f5f4;">
+                    <h2 style="color: #ffffff !important;">એક ચોરસ વાર જગ્યાનું ભૂમિદાન <span style="color: #fef08a !important;">રૂા. ૨૫૦૦/-</span></h2>
+                    <p style="font-size: 0.98rem; line-height: 1.74; color: rgba(255, 255, 255, 0.92); margin-bottom: 1.25rem;">
                         આપણા ભવ્ય સંકુલના પાયામાં આપના અને આપના પરિવાર તરફથી ૧ ચોરસ વાર કે તેથી વધુ ભૂમિદાન અર્પણ કરી અક્ષય પુણ્યના સહભાગી બનો. તમામ દાતાઓનું નામ સંકુલની કાયમી દાતા તક્તી (Wall of Honor) પર અંકિત કરવામાં આવશે.
                     </p>
 
@@ -260,9 +403,9 @@
                 <div style="text-align: center;">
                     <div style="background: rgba(255,255,255,0.15); border: 2px dashed rgba(254, 240, 138, 0.6); padding: 2rem; border-radius: var(--radius-lg); backdrop-filter: blur(8px);">
                         <i class="ri-qr-code-line" style="font-size: 3.5rem; color: #fef08a;"></i>
-                        <h4 style="font-size: 1.35rem; font-weight:800; margin: 0.75rem 0 0.5rem;">ઓનલાઇન સહયોગ QR</h4>
-                        <p style="font-size: 0.9rem; color: #fef08a; margin-bottom: 1.25rem;">GPay / PhonePe / Paytm / BHIM</p>
-                        <a href="{{ route('bhumidan') }}" class="btn btn-white" style="font-weight: 800; width: 100%;">
+                        <h4 style="color: #ffffff !important; font-size: 1.15rem; font-weight:650; margin: 0.75rem 0 0.5rem;">ઓનલાઇન સહયોગ QR</h4>
+                        <p style="font-size: 0.88rem; color: #fef08a; margin-bottom: 1.25rem;">GPay / PhonePe / Paytm / BHIM</p>
+                        <a href="{{ route('bhumidan') }}" class="btn btn-white" style="font-weight: 600; width: 100%;">
                             <i class="ri-bank-card-line"></i> દાન નોંધણી & બેંક ખાતું
                         </a>
                     </div>
@@ -362,7 +505,7 @@
             @foreach($galleryItems as $item)
                 <div class="gallery-card">
                     <div class="gallery-media">
-                        <img src="{{ $item->media_url }}" alt="{{ $item->title }}" loading="lazy">
+                        <img src="{{ $item->thumbnail_url ?: $item->media_url }}" alt="{{ $item->title }}" loading="lazy">
                         @if($item->media_type === 'instagram_reel')
                             <div class="gallery-type-badge" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
                                 <i class="ri-instagram-line"></i> Reel
@@ -404,38 +547,38 @@
         <div class="contact-info-card">
             <span class="badge badge-gold" style="margin-bottom: 0.75rem;">સંકુલ સ્થળ નિર્દેશ</span>
             <h3>શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ</h3>
-            <p style="font-size: 1.05rem; line-height: 1.7; opacity: 0.95;">
+            <p style="font-size: 0.95rem; line-height: 1.74; opacity: 0.92;">
                 ગિરનારની પવિત્ર ગોદમાં, પ્રકૃતિની વચ્ચે સોનરખ નદીના કાંઠે આકાર લઈ રહેલું ગૌરવશાળી સંકુલ.
             </p>
 
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-map-pin-2-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.05rem;">મુખ્ય સંકુલ સરનામું:</strong>
-                    <span>જૂનાગઢ બાયપાસ, ખલીલપુર ચોકડી પાસે, સોનરખ નદીના કાંઠે, જૂનાગઢ, ગુજરાત.</span>
+                    <strong style="display:block; font-size: 0.95rem; font-weight: 600;">મુખ્ય સંકુલ સરનામું:</strong>
+                    <span style="font-size: 0.9rem; line-height: 1.6;">જૂનાગઢ બાયપાસ, ખલીલપુર ચોકડી પાસે, સોનરખ નદીના કાંઠે, જૂનાગઢ, ગુજરાત.</span>
                 </div>
             </div>
 
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-phone-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.05rem;">સત્તાવાર હેલ્પલાઇન:</strong>
-                    <a href="tel:9093390934" style="color: #fef08a; font-weight:800; font-size: 1.15rem;">909 33 909 34</a>
+                    <strong style="display:block; font-size: 0.92rem; font-weight: 600;">સત્તાવાર હેલ્પલાઇન:</strong>
+                    <a href="tel:9093390934" style="color: #fef08a; font-weight:600; font-family: var(--font-latin); font-size: 1.1rem;">909 33 909 34</a>
                 </div>
             </div>
 
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-instagram-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.05rem;">ઇન્સ્ટાગ્રામ પેજ:</strong>
-                    <a href="https://www.instagram.com/explore/locations/265511100633813/khodaldham-yuva-samiti-junagadh/" target="_blank" style="color: #fef08a;">
+                    <strong style="display:block; font-size: 1rem;">ઇન્સ્ટાગ્રામ પેજ:</strong>
+                    <a href="https://www.instagram.com/explore/locations/265511100633813/khodaldham-yuva-samiti-junagadh/" target="_blank" style="color: #fef08a; font-size: 0.92rem;">
                         @leuvapateltrust_junagadh
                     </a>
                 </div>
             </div>
 
             <div style="margin-top: 2rem;">
-                <a href="https://wa.me/919093390934" target="_blank" class="btn btn-white" style="width: 100%;">
+                <a href="https://wa.me/919093390934" target="_blank" class="btn btn-white" style="width: 100%; font-weight: 600;">
                     <i class="ri-whatsapp-fill" style="color: #25d366;"></i> વોટ્સએપ પર લોકેશન મેળવો
                 </a>
             </div>
@@ -443,7 +586,7 @@
 
         <!-- Quick Inquiry Form -->
         <div class="form-card">
-            <h3 style="font-size: 1.5rem; color: var(--color-maroon); font-weight:800; margin-bottom: 0.35rem;">
+            <h3 style="font-size: 1.35rem; color: var(--color-maroon); font-weight:700; margin-bottom: 0.35rem;">
                 બુકિંગ અથવા સામાન્ય પૂછપરછ
             </h3>
             <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.5rem;">

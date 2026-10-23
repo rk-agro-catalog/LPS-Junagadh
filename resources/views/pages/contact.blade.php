@@ -23,16 +23,16 @@
         <!-- Left: Official Contact Details -->
         <div class="contact-info-card">
             <span class="badge badge-gold" style="margin-bottom: 0.75rem;">સત્તાવાર ટ્રસ્ટ કાર્યાલય</span>
-            <h3 style="font-size: 1.75rem; font-weight: 800;">શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ</h3>
-            <p style="font-size: 1.05rem; line-height: 1.7; opacity: 0.95;">
+            <h3 style="font-size: clamp(1.25rem, 2.5vw, 1.55rem); font-weight: 700; color: #ffffff !important;">શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ</h3>
+            <p style="font-size: 1rem; line-height: 1.7; color: rgba(255, 255, 255, 0.92) !important;">
                 કોઈપણ પ્રકારની પૂછપરછ, હોલ કે પાર્ટી પ્લોટ બુકિંગ, અથવા ભૂમિદાન યોજના અંગે માહિતી મેળવવા માટે અમારો સંપર્ક કરો.
             </p>
 
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-map-pin-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.1rem; color: #fef08a;">સંકુલ સરનામું:</strong>
-                    <span style="font-size: 1rem; line-height: 1.6;">
+                    <strong style="display:block; font-size: 1rem; color: #fef08a !important;">સંકુલ સરનામું:</strong>
+                    <span style="font-size: 0.95rem; line-height: 1.6; color: #ffffff;">
                         જૂનાગઢ બાયપાસ, ખલીલપુર ચોકડી પાસે, સોનરખ નદીના કાંઠે, જૂનાગઢ, ગુજરાત - ૩૬૨૦૦૧.
                     </span>
                 </div>
@@ -41,8 +41,8 @@
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-phone-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.1rem; color: #fef08a;">સત્તાવાર હેલ્પલાઇન:</strong>
-                    <a href="tel:9093390934" style="color: #fff; font-size: 1.35rem; font-weight:900;">
+                    <strong style="display:block; font-size: 1rem; color: #fef08a;">સત્તાવાર હેલ્પલાઇન:</strong>
+                    <a href="tel:9093390934" style="color: #fff; font-size: 1.25rem; font-weight:700; font-family: var(--font-latin);">
                         909 33 909 34
                     </a>
                 </div>
@@ -51,8 +51,8 @@
             <div class="contact-item">
                 <div class="contact-icon"><i class="ri-whatsapp-fill"></i></div>
                 <div>
-                    <strong style="display:block; font-size: 1.1rem; color: #fef08a;">વોટ્સએપ સપોર્ટ:</strong>
-                    <a href="https://wa.me/919093390934" target="_blank" style="color: #fff; font-size: 1.1rem; font-weight:700;">
+                    <strong style="display:block; font-size: 1rem; color: #fef08a;">વોટ્સએપ સપોર્ટ:</strong>
+                    <a href="https://wa.me/919093390934" target="_blank" style="color: #fff; font-size: 1.05rem; font-weight:600;">
                         909 33 909 34 પર મેસેજ કરો
                     </a>
                 </div>
@@ -71,7 +71,7 @@
 
         <!-- Right: Inquiry Form -->
         <div class="form-card">
-            <h3 style="font-size: 1.6rem; color: var(--color-maroon); font-weight: 800; margin-bottom: 0.5rem;">
+            <h3 style="font-size: 1.35rem; color: var(--color-maroon); font-weight: 700; margin-bottom: 0.4rem;">
                 સંદેશો અથવા સૂચન મોકલો
             </h3>
             <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 1.5rem;">

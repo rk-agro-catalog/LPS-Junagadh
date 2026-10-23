@@ -20,7 +20,7 @@
 <div class="container section-padding">
     <div style="max-width: 850px; margin: 0 auto;">
         <div class="form-card">
-            <h2 style="font-size: clamp(1.2rem, 3vw, 1.55rem); color: var(--color-maroon); font-weight: 800; margin-bottom: 0.4rem;">
+            <h2 style="font-size: clamp(1.2rem, 2.5vw, 1.45rem); color: var(--color-maroon); font-weight: 700; margin-bottom: 0.4rem;">
                 જ્ઞાતિ સભ્ય રજીસ્ટ્રેશન ફોર્મ
             </h2>
             <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 1.75rem;">

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Bhumidan;
 use App\Models\BookingInquiry;
+use App\Models\Event;
 use App\Models\GalleryItem;
 use App\Models\Member;
 use App\Models\Trustee;
@@ -279,5 +280,55 @@ class DatabaseSeeder extends Seeder
                 'status' => 'approved',
             ]
         );
+
+        // Seed Sample Samaj Events
+        $events = [
+            [
+                'title' => 'ભવ્ય સંકુલ સ્નેહમિલન & નિર્માણ સમીક્ષા મહાસભા',
+                'slug' => 'sankul-snehmilan-mahasabha',
+                'category' => 'સ્નેહમિલન',
+                'event_date' => now()->addDays(12)->format('Y-m-d'),
+                'event_time' => 'સાંજે ૫:૩૦ કલાકે',
+                'venue' => 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ સંકુલ, ખલીલપુર ચોકડી પાસે, જૂનાગઢ',
+                'description' => 'સમસ્ત લેઉવા પટેલ જ્ઞાતિજનો તથા ટ્રસ્ટી મંડળની ઉપસ્થિતિમાં સંકુલ નિર્માણ કાર્યની પ્રગતિ અને ભૂમિદાન અભિયાનની સમીક્ષા માટે ભવ્ય સ્નેહમિલન અને મહાપ્રસાદનું આયોજન.',
+                'image_url' => 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+                'organizer' => 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ',
+                'contact_person' => 'ટ્રસ્ટ કાર્યાલય: 909 33 909 34',
+                'is_featured' => true,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'સમસ્ત લેઉવા પટેલ સમાજ મેગા રક્તદાન & નિઃશુલ્ક આરોગ્ય કેમ્પ',
+                'slug' => 'mega-blood-donation-health-camp',
+                'category' => 'આરોગ્ય',
+                'event_date' => now()->addDays(28)->format('Y-m-d'),
+                'event_time' => 'સવારે ૮:૩૦ થી બપોરે ૧:૦૦ સુધી',
+                'venue' => 'સમાજ ભવન હોલ, સોનરખ નદી કાંઠે, જૂનાગઢ બાયપાસ',
+                'description' => 'જ્ઞાતિજનો અને જરૂરિયાતમંદ દર્દીઓ માટે વિશાળ રક્તદાન શિબિર અને નિષ્ણાત તબીબો દ્વારા સંપૂર્ણ હેલ્થ ચેકઅપ કેમ્પનું આયોજન.',
+                'image_url' => 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
+                'organizer' => 'યુવા પાંખ & મેડિકલ સેલ - LPS Junagadh',
+                'contact_person' => 'પરેશભાઈ ડોબરીયા: 909 33 909 34',
+                'is_featured' => true,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'સરદાર વલ્લભભાઈ પટેલ જયંતિ ઉત્સવ & જ્ઞાતિ પ્રતિભા સન્માન સમારંભ',
+                'slug' => 'sardar-patel-jayanti-pratibha-sanman',
+                'category' => 'સામાજિક',
+                'event_date' => now()->addDays(45)->format('Y-m-d'),
+                'event_time' => 'સવારે ૯:૦૦ કલાકે',
+                'venue' => 'વિભાગ-૧ ભવ્ય પાર્ટી પ્લોટ, ખલીલપુર ચોકડી, જૂનાગઢ',
+                'description' => 'અખંડ ભારતના શિલ્પી લોહપુરુષ સરદાર વલ્લભભાઈ પટેલની જન્મજયંતિની ગૌરવપૂર્ણ ઉજવણી સાથે સમાજના તેજસ્વી તારલાઓ (ધોરણ ૧૦, ૧૨ અને કોલેજ શ્રેષ્ઠ વિદ્યાર્થીઓ) નું સન્માન.',
+                'image_url' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
+                'organizer' => 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ',
+                'contact_person' => 'પ્રો. હરેશભાઈ કાવાણી: 909 33 909 34',
+                'is_featured' => false,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($events as $event) {
+            Event::firstOrCreate(['title' => $event['title']], $event);
+        }
     }
 }

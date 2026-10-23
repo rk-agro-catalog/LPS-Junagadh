@@ -21,7 +21,7 @@
     <div class="page-split-grid">
         <!-- Left: Form -->
         <div class="form-card">
-            <h2 style="font-size: clamp(1.2rem, 3vw, 1.55rem); color: var(--color-maroon); font-weight: 800; margin-bottom: 0.4rem;">
+            <h2 style="font-size: clamp(1.2rem, 2.5vw, 1.45rem); color: var(--color-maroon); font-weight: 650; margin-bottom: 0.4rem;">
                 ઓનલાઇન બુકિંગ ઇન્ક્વાયરી ફોર્મ
             </h2>
             <p style="font-size: clamp(0.85rem, 2vw, 0.95rem); color: var(--color-text-muted); margin-bottom: 1.25rem;">
@@ -116,11 +116,11 @@
 
         <!-- Right: Rules & Helpline Card -->
         <div>
-            <div style="background: var(--color-surface); border: 1.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem;">
-                <h4 style="font-size: 1.3rem; font-weight: 800; color: var(--color-maroon); margin-bottom: 1rem;">
+            <div style="background: var(--color-surface); border: 1.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1.75rem;">
+                <h4 style="font-size: 1.15rem; font-weight: 650; color: var(--color-maroon); margin-bottom: 0.85rem;">
                     <i class="ri-information-line"></i> બુકિંગ નિયમો & માર્ગદર્શિકા
                 </h4>
-                <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--color-text-muted);">
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.88rem; color: var(--color-text-muted);">
                     <li style="display: flex; gap: 0.5rem;">
                         <i class="ri-checkbox-circle-fill" style="color: var(--color-accent-green);"></i>
                         <span>બુકિંગની પ્રાથમિકતા લેઉવા પટેલ સમાજના જ્ઞાતિજનો માટે રહેશે.</span>
@@ -140,15 +140,15 @@
                 </ul>
             </div>
 
-            <div style="background: var(--gradient-royal); color: #fff; border-radius: var(--radius-lg); padding: 2.25rem; text-align: center; box-shadow: var(--shadow-lg);">
-                <i class="ri-customer-service-2-fill" style="font-size: 3rem; color: #fef08a;"></i>
-                <h4 style="font-size: 1.35rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">
+            <div style="background: var(--gradient-royal); color: #fff; border-radius: var(--radius-lg); padding: 2rem; text-align: center; box-shadow: var(--shadow-lg);">
+                <i class="ri-customer-service-2-fill" style="font-size: 2.8rem; color: #fef08a;"></i>
+                <h4 style="font-size: 1.25rem; font-weight: 650; margin: 0.65rem 0 0.4rem; color: #ffffff !important;">
                     તાત્કાલિક બુકિંગ સહાય
                 </h4>
-                <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 1.25rem;">
+                <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.92) !important; margin-bottom: 1.25rem;">
                     ફોન પર સીધી તારીખ ચકાસવા માટે અમારી હેલ્પલાઇન પર સંપર્ક કરો:
                 </p>
-                <a href="tel:9093390934" class="btn btn-white" style="font-size: 1.2rem; font-weight: 900; width: 100%; margin-bottom: 0.75rem;">
+                <a href="tel:9093390934" class="btn btn-white" style="font-size: 1.15rem; font-weight: 600; font-family: var(--font-latin); width: 100%; margin-bottom: 0.75rem;">
                     <i class="ri-phone-fill"></i> 909 33 909 34
                 </a>
                 <a href="https://wa.me/919093390934?text={{ urlencode('જય સરદાર, મારે સંકુલ બુકિંગ માટે તારીખ ઉપલબ્ધતા જાણવી છે.') }}" target="_blank" class="btn btn-outline-gold" style="width: 100%; font-size: 0.95rem; border-color: #fef08a; color: #fff;">

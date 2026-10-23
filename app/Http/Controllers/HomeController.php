@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Bhumidan;
 use App\Models\BookingInquiry;
 use App\Models\ContactMessage;
+use App\Models\Event;
 use App\Models\GalleryItem;
 use App\Models\Member;
 use App\Models\Trustee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -36,14 +38,43 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
+        $upcomingEvents = Event::where('is_active', true)
+            ->where('event_date', '>=', now()->toDateString())
+            ->orderBy('event_date', 'asc')
+            ->take(3)
+            ->get();
+
         return view('pages.home', compact(
             'totalYards',
             'totalDonation',
             'totalDonorsCount',
             'trustees',
             'featuredDonors',
-            'galleryItems'
+            'galleryItems',
+            'upcomingEvents'
         ));
+    }
+
+    /**
+     * Display Samaj Events Page (Upcoming & Past Events)
+     */
+    public function events(Request $request): View
+    {
+        $category = $request->query('category');
+        $query = Event::where('is_active', true)->orderBy('event_date', 'asc');
+
+        if ($category && $category !== 'all') {
+            $query->where('category', $category);
+        }
+
+        $upcomingEvents = (clone $query)->where('event_date', '>=', now()->toDateString())->paginate(9);
+        $pastEvents = Event::where('is_active', true)
+            ->where('event_date', '<', now()->toDateString())
+            ->orderBy('event_date', 'desc')
+            ->take(6)
+            ->get();
+
+        return view('pages.events', compact('upcomingEvents', 'pastEvents', 'category'));
     }
 
     /**

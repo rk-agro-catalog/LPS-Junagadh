@@ -25,11 +25,11 @@
         <div style="display: flex; align-items: center; gap: 1rem;">
             <i class="ri-instagram-line" style="font-size: 2.5rem;"></i>
             <div>
-                <h3 style="font-size: 1.35rem; font-weight: 800;">Instagram : @leuvapateltrust_junagadh</h3>
+                <h3 style="font-size: 1.25rem; font-weight: 700;">Instagram : @leuvapateltrust_junagadh</h3>
                 <p style="font-size: 0.9rem; opacity: 0.95;">ખોડલધામ યુવા સમિતિ અને લેઉવા પટેલ ટ્રસ્ટ જૂનાગઢના લેટેસ્ટ રીલ્સ અને અપડેટ્સ</p>
             </div>
         </div>
-        <a href="https://www.instagram.com/explore/locations/265511100633813/khodaldham-yuva-samiti-junagadh/" target="_blank" class="btn btn-white" style="font-weight: 800;">
+        <a href="https://www.instagram.com/explore/locations/265511100633813/khodaldham-yuva-samiti-junagadh/" target="_blank" class="btn btn-white" style="font-weight: 600;">
             <i class="ri-external-link-line"></i> ઇન્સ્ટાગ્રામ પેજ ખોલો
         </a>
     </div>
@@ -58,7 +58,7 @@
         @forelse($items as $item)
             <div class="gallery-card">
                 <div class="gallery-media">
-                    <img src="{{ $item->media_url }}" alt="{{ $item->title }}" loading="lazy">
+                    <img src="{{ $item->thumbnail_url ?: $item->media_url }}" alt="{{ $item->title }}" loading="lazy">
                     @if($item->media_type === 'instagram_reel')
                         <div class="gallery-type-badge" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
                             <i class="ri-instagram-line"></i> Instagram Reel

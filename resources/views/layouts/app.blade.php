@@ -2,17 +2,22 @@
 <html lang="gu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>@yield('title', 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ') | LPS Junagadh</title>
     <meta name="description" content="શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ (LPS Junagadh) સત્તાવાર પોર્ટલ. પ્રમુખ સેવા સંકલ્પ વિભાગ-૧ & વિભાગ-૨, ભૂમિદાન યોજના (રૂા. ૨૫૦૦/- પ્રતિ ચોરસ વાર), હોલ-પ્લોટ બુકિંગ.">
-    <meta name="theme-color" content="#881337">
+    <meta name="theme-color" content="#780d28">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LPS Junagadh">
+    <meta name="application-name" content="LPS Junagadh">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23b45309'/><text x='50' y='64' font-size='38' font-weight='bold' fill='%23fef08a' text-anchor='middle'>LPS</text></svg>">
     
     <!-- Remix Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
 
     <!-- Custom LPS Style -->
-    <link rel="stylesheet" href="{{ asset('css/lps-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lps-style.css') }}?v={{ file_exists(public_path('css/lps-style.css')) ? filemtime(public_path('css/lps-style.css')) : '2.0' }}">
     
     @stack('styles')
 </head>
@@ -28,12 +33,12 @@
                 </div>
                 <div class="topbar-item">
                     <i class="ri-phone-fill"></i>
-                    <a href="tel:9093390934" style="color: #fef08a; font-weight:700;">909 33 909 34</a>
+                    <a href="tel:9093390934" style="color: #fef08a; font-weight:600; font-family: var(--font-latin);">909 33 909 34</a>
                 </div>
             </div>
             <div class="topbar-right">
                 <div class="topbar-item">
-                    <span style="color:#fef08a; font-weight:700;">॥ સંગઠન એ જ શક્તિ ॥</span>
+                    <span style="color:#fef08a; font-weight:600;">॥ સંગઠન એ જ શક્તિ ॥</span>
                 </div>
                 <div class="topbar-social">
                     <a href="https://www.instagram.com/explore/locations/265511100633813/khodaldham-yuva-samiti-junagadh/" target="_blank" title="Instagram"><i class="ri-instagram-line"></i></a>
@@ -62,12 +67,20 @@
             <ul class="nav-menu desktop-menu desktop-only" id="navMenu">
                 <li><a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">મુખ્ય પૃષ્ઠ</a></li>
                 <li><a href="{{ route('sankalp') }}" class="nav-link {{ request()->routeIs('sankalp') ? 'active' : '' }}">સેવા સંકલ્પ</a></li>
-                <li><a href="{{ route('bhumidan') }}" class="nav-link {{ request()->routeIs('bhumidan') ? 'active' : '' }}">ભૂમિદાન યોજના</a></li>
-                <li><a href="{{ route('booking') }}" class="nav-link {{ request()->routeIs('booking') ? 'active' : '' }}">હોલ / પ્લોટ બુકિંગ</a></li>
-                <li><a href="{{ route('trustees') }}" class="nav-link {{ request()->routeIs('trustees') ? 'active' : '' }}">ટ્રસ્ટી મંડળ</a></li>
+                <li><a href="{{ route('bhumidan') }}" class="nav-link {{ request()->routeIs('bhumidan') ? 'active' : '' }}">ભૂમિદાન</a></li>
+                <li><a href="{{ route('booking') }}" class="nav-link {{ request()->routeIs('booking') ? 'active' : '' }}">હોલ બુકિંગ</a></li>
+                <li><a href="{{ route('events') }}" class="nav-link {{ request()->routeIs('events*') ? 'active' : '' }}">કાર્યક્રમો</a></li>
                 <li><a href="{{ route('gallery') }}" class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}">ગેલેરી</a></li>
-                <li><a href="{{ route('membership') }}" class="nav-link {{ request()->routeIs('membership') ? 'active' : '' }}">સમાજ ડિરેક્ટરી</a></li>
-                <li><a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">સંપર્ક</a></li>
+                <li class="nav-dropdown">
+                    <a href="javascript:void(0)" class="nav-link nav-dropdown-toggle {{ request()->routeIs('trustees', 'membership', 'contact') ? 'active' : '' }}">
+                        <span>વધુ વિગત</span> <i class="ri-arrow-down-s-line"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('membership') }}" class="{{ request()->routeIs('membership') ? 'active' : '' }}"><i class="ri-team-line"></i> જ્ઞાતિ સભ્યો ડિરેક્ટરી</a></li>
+                        <li><a href="{{ route('trustees') }}" class="{{ request()->routeIs('trustees') ? 'active' : '' }}"><i class="ri-shield-user-line"></i> ટ્રસ્ટી મંડળ પરિચય</a></li>
+                        <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}"><i class="ri-contacts-book-line"></i> કાર્યાલય સંપર્ક</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <!-- Header Right Actions -->
@@ -81,7 +94,7 @@
                     <a href="tel:9093390934" class="mobile-icon-btn call" title="Call">
                         <i class="ri-phone-fill"></i>
                     </a>
-                    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <button class="mobile-toggle" id="mobileToggle" onclick="openMobileDrawer()" aria-label="Toggle Menu">
                         <i class="ri-menu-line"></i>
                     </button>
                 </div>
@@ -90,7 +103,7 @@
     </header>
 
     <!-- Slide-over Mobile Navigation Drawer -->
-    <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer-overlay" id="drawerOverlay" onclick="closeMobileDrawer()"></div>
     <div class="mobile-drawer" id="mobileDrawer">
         <div class="drawer-header">
             <div class="brand-logo" style="gap: 0.6rem;">
@@ -98,11 +111,11 @@
                     <i class="ri-shield-star-fill"></i>
                 </div>
                 <div class="brand-text">
-                    <h2 style="font-size: 0.95rem; font-weight: 800; color: var(--color-maroon);">LPS Junagadh</h2>
-                    <span style="font-size: 0.72rem;">શ્રી સમસ્ત લેઉવા પટેલ સમાજ</span>
+                    <h2 style="font-size: 0.95rem; font-weight: 800; color: #fff;">LPS Junagadh</h2>
+                    <span style="font-size: 0.72rem; color: #fef08a;">શ્રી સમસ્ત લેઉવા પટેલ સમાજ</span>
                 </div>
             </div>
-            <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close Menu">
+            <button class="drawer-close-btn" id="drawerCloseBtn" onclick="closeMobileDrawer()" aria-label="Close Menu">
                 <i class="ri-close-line"></i>
             </button>
         </div>
@@ -112,6 +125,7 @@
                 <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}"><i class="ri-home-4-line"></i> મુખ્ય પૃષ્ઠ</a></li>
                 <li><a href="{{ route('sankalp') }}" class="{{ request()->routeIs('sankalp') ? 'active' : '' }}"><i class="ri-building-line"></i> સેવા સંકલ્પ (વિભાગ ૧ & ૨)</a></li>
                 <li><a href="{{ route('bhumidan') }}" class="{{ request()->routeIs('bhumidan') ? 'active' : '' }}"><i class="ri-hand-heart-line"></i> એક ચોરસ વાર ભૂમિદાન (રૂા. ૨૫૦૦/-)</a></li>
+                <li><a href="{{ route('events') }}" class="{{ request()->routeIs('events*') ? 'active' : '' }}"><i class="ri-calendar-event-line"></i> સમાજ કાર્યક્રમો & ઉત્સવો</a></li>
                 <li><a href="{{ route('booking') }}" class="{{ request()->routeIs('booking') ? 'active' : '' }}"><i class="ri-calendar-check-line"></i> પાર્ટી પ્લોટ & હોલ બુકિંગ</a></li>
                 <li><a href="{{ route('trustees') }}" class="{{ request()->routeIs('trustees') ? 'active' : '' }}"><i class="ri-team-line"></i> ટ્રસ્ટી મંડળ & આગેવાનો</a></li>
                 <li><a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'active' : '' }}"><i class="ri-gallery-line"></i> ફોટો, વિડીયો & રીલ્સ</a></li>
@@ -121,12 +135,15 @@
             </ul>
 
             <div class="drawer-cta-box">
-                <a href="{{ route('bhumidan') }}" class="btn btn-primary" style="width: 100%; font-size: 0.95rem;">
-                    <i class="ri-heart-fill"></i> ઓનલાઇન ભૂમિદાન આપો
+                <a href="{{ route('bhumidan') }}" class="btn btn-primary" style="width: 100%; font-size: 0.95rem; margin-bottom: 0.75rem;">
+                    <i class="ri-heart-fill"></i> ઓનલાઇન ૧ વાર ભૂમિદાન આપો
                 </a>
-                <div style="margin-top: 1rem; text-align: center;">
-                    <a href="tel:9093390934" style="font-weight: 700; color: var(--color-maroon); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        <i class="ri-phone-fill" style="color: var(--color-primary-light);"></i> 909 33 909 34
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="tel:9093390934" class="btn btn-white" style="flex: 1; font-size: 0.82rem; padding: 0.5rem; justify-content: center;">
+                        <i class="ri-phone-fill" style="color: var(--color-primary-light);"></i> કોલ કરો
+                    </a>
+                    <a href="https://wa.me/919093390934" target="_blank" class="btn" style="flex: 1; font-size: 0.82rem; padding: 0.5rem; background: #25d366; color: #fff; justify-content: center;">
+                        <i class="ri-whatsapp-line"></i> વોટ્સએપ
                     </a>
                 </div>
             </div>
@@ -161,7 +178,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h4>શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ</h4>
-                    <p style="color: var(--color-gold); font-weight:700; font-size: 0.9rem; margin-bottom: 0.5rem;">LPS Junagadh • જૂનાગઢ</p>
+                    <p style="color: var(--color-gold); font-weight:600; font-size: 0.9rem; margin-bottom: 0.5rem;">LPS Junagadh • જૂનાગઢ</p>
                     <p style="font-size: 0.88rem; line-height: 1.6; color: #a8a29e;">
                         લેઉવા પટેલ સમાજના ઉત્કર્ષ અને સુખાકારી માટે સમર્પિત ગૌરવવંતું સંકુલ નિર્માણ.
                     </p>
@@ -201,9 +218,9 @@
                     </p>
                     <p style="font-size: 0.88rem; margin-bottom: 0.75rem;">
                         <i class="ri-phone-fill" style="color: var(--color-gold);"></i> 
-                        <a href="tel:9093390934" style="color: #fff; font-weight:700;">909 33 909 34</a>
+                        <a href="tel:9093390934" style="color: #fff; font-weight:600; font-family: var(--font-latin);">909 33 909 34</a>
                     </p>
-                    <a href="https://wa.me/919093390934" target="_blank" class="btn btn-outline-gold" style="font-size: 0.82rem; padding: 0.4rem 0.8rem; width: 100%; border-color: #fef08a; color: #fff;">
+                    <a href="https://wa.me/919093390934" target="_blank" class="btn btn-outline-gold" style="font-size: 0.82rem; padding: 0.4rem 0.8rem; width: 100%; border-color: #fef08a; color: #fff; font-weight: 600;">
                         <i class="ri-whatsapp-line"></i> વોટ્સએપ સંપર્ક
                     </a>
                 </div>
@@ -240,19 +257,20 @@
             <span>ભૂમિદાન</span>
         </a>
 
-        <a href="{{ route('booking') }}" class="bottom-nav-item {{ request()->routeIs('booking') ? 'active' : '' }}">
-            <i class="ri-calendar-check-line"></i>
-            <span>બુકિંગ</span>
+        <a href="{{ route('events') }}" class="bottom-nav-item {{ request()->routeIs('events*') ? 'active' : '' }}">
+            <i class="ri-calendar-event-fill"></i>
+            <span>કાર્યક્રમો</span>
         </a>
 
-        <button type="button" class="bottom-nav-item" id="bottomNavMenuBtn">
+        <button type="button" class="bottom-nav-item" id="bottomNavMenuBtn" onclick="openMobileDrawer()">
             <i class="ri-menu-4-line"></i>
             <span>મેનુ</span>
         </button>
     </nav>
 
     <!-- Custom Scripts -->
-    <script src="{{ asset('js/lps-app.js') }}"></script>
+    <script src="{{ asset('js/lps-app.js') }}?v={{ file_exists(public_path('js/lps-app.js')) ? filemtime(public_path('js/lps-app.js')) : '2.0' }}"></script>
+    <script src="{{ asset('js/gujarati-transliterate.js') }}?v={{ file_exists(public_path('js/gujarati-transliterate.js')) ? filemtime(public_path('js/gujarati-transliterate.js')) : '2.0' }}"></script>
     @stack('scripts')
 </body>
 </html>
