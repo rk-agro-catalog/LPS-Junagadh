@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('device_type', 30)->default('Desktop')->index(); // 'Mobile', 'Tablet', 'Desktop'
             $table->string('os', 80)->nullable(); // 'Android', 'iOS', 'Windows', 'macOS', 'Linux'
             $table->string('browser', 80)->nullable(); // 'Chrome', 'Safari', 'Firefox', 'Edge'
-            $table->string('device_name', 120)->nullable(); // 'Mobile (Android)', 'Desktop PC (Windows)'
-            $table->string('location', 120)->nullable(); // City/Country
+            $table->string('device_name', 255)->nullable(); // e.g. 'Samsung Galaxy S23 Ultra (SM-S918B)', 'Apple iPhone 15 Pro'
+            $table->string('location', 255)->nullable(); // e.g. 'Junagadh, Gujarat, 362001 (Reliance Jio)'
             $table->string('url', 255)->nullable();
             $table->string('method', 10)->default('POST');
             $table->json('payload')->nullable();

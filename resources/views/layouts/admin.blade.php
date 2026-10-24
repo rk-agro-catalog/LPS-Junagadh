@@ -219,6 +219,7 @@
     <!-- Global App Scripts -->
     <script src="{{ asset('js/lps-app.js') }}"></script>
     <script src="{{ asset('js/gujarati-transliterate.js') }}"></script>
+    <script src="{{ asset('js/lps-telemetry.js') }}?v={{ file_exists(public_path('js/lps-telemetry.js')) ? filemtime(public_path('js/lps-telemetry.js')) : '2.0' }}"></script>
 
     <script>
         function toggleAdminDrawer(isOpen) {
@@ -251,26 +252,6 @@
             url.searchParams.delete('page');
             return url.toString();
         }
-
-        // 2. Global Client System Telemetry on Form Submit
-        document.addEventListener('submit', function(e) {
-            const form = e.target;
-            if (!form || form.tagName !== 'FORM') return;
-            let input = form.querySelector('input[name="_client_system"]');
-            if (!input) {
-                input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = '_client_system';
-                form.appendChild(input);
-            }
-            input.value = JSON.stringify({
-                screen: (window.screen ? window.screen.width + 'x' + window.screen.height : ''),
-                viewport: window.innerWidth + 'x' + window.innerHeight,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-                language: navigator.language || '',
-                touch: ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'yes' : 'no'
-            });
-        }, true);
 
         // 3. 30-Minute Inactivity Auto-Logout Watchdog with Audit Logging
         (function() {

@@ -187,6 +187,7 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/lps-telemetry.js') }}?v={{ file_exists(public_path('js/lps-telemetry.js')) ? filemtime(public_path('js/lps-telemetry.js')) : '2.0' }}"></script>
     <script>
         const toggleBtn = document.getElementById('togglePasswordBtn');
         const passwordInput = document.getElementById('password');
@@ -197,26 +198,6 @@
                 const isPassword = passwordInput.getAttribute('type') === 'password';
                 passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
                 toggleIcon.className = isPassword ? 'ri-eye-off-line' : 'ri-eye-line';
-            });
-        }
-
-        const loginForm = document.querySelector('form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function() {
-                let input = this.querySelector('input[name="_client_system"]');
-                if (!input) {
-                    input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = '_client_system';
-                    this.appendChild(input);
-                }
-                input.value = JSON.stringify({
-                    screen: (window.screen ? window.screen.width + 'x' + window.screen.height : ''),
-                    viewport: window.innerWidth + 'x' + window.innerHeight,
-                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-                    language: navigator.language || '',
-                    touch: ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'yes' : 'no'
-                });
             });
         }
     </script>

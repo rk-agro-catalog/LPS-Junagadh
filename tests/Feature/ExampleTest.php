@@ -135,11 +135,17 @@ class ExampleTest extends TestCase
             'status' => 'verified',
         ]);
 
-        $response = $this->get('/bhumidan/receipt/'.$donation->receipt_number);
-        $response->assertStatus(200);
-        $response->assertSee('WhatsApp પર શેર કરો');
-        $response->assertSee('api.whatsapp.com/send');
-        $response->assertSee('909 33 909 34');
+        // 1. Guest access is forbidden - redirects to bhumidan page
+        $guestResponse = $this->get('/bhumidan/receipt/'.$donation->receipt_number);
+        $guestResponse->assertRedirect(route('bhumidan'));
+
+        // 2. Authenticated Admin can view and share receipt
+        $admin = User::factory()->create();
+        $adminResponse = $this->actingAs($admin)->get('/bhumidan/receipt/'.$donation->receipt_number);
+        $adminResponse->assertStatus(200);
+        $adminResponse->assertSee('WhatsApp પર શેર કરો');
+        $adminResponse->assertSee('api.whatsapp.com/send');
+        $adminResponse->assertSee('909 33 909 34');
     }
 
     /**

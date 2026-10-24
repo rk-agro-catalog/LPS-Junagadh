@@ -139,8 +139,8 @@
                     <th style="white-space: nowrap;">સમય</th>
                     <th>યુઝર / સબમિટર</th>
                     <th>પ્રવૃત્તિ & વર્ણન (Action)</th>
-                    <th>ડિવાઇસ & સિસ્ટમ (OS/Browser)</th>
-                    <th>IP એડ્રેસ & લોકેશન</th>
+                    <th>ચોક્કસ ડિવાઇસ & મોડેલ</th>
+                    <th>ચોક્કસ લોકેશન & IP</th>
                     <th style="text-align: center;">વિગત</th>
                     <th style="text-align: center;">એક્શન</th>
                 </tr>
@@ -177,7 +177,7 @@
                         </td>
 
                         <!-- Action & Description -->
-                        <td style="max-width: 320px;">
+                        <td style="max-width: 300px;">
                             <div style="margin-bottom: 0.25rem;">
                                 <span class="badge badge-gold" style="font-size: 0.72rem; padding: 0.15rem 0.5rem; font-family: var(--font-latin);">
                                     {{ $log->action }}
@@ -188,38 +188,43 @@
                             </div>
                         </td>
 
-                        <!-- Device, OS, Browser -->
-                        <td style="white-space: nowrap;">
-                            <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
+                        <!-- Exact Device, Model & OS -->
+                        <td style="white-space: nowrap; max-width: 280px;">
+                            <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.25rem;">
                                 @if($log->device_type === 'Mobile')
-                                    <span class="badge" style="background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; font-size: 0.72rem;">
+                                    <span class="badge" style="background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; font-size: 0.72rem; padding: 0.15rem 0.45rem;">
                                         <i class="ri-smartphone-line"></i> મોબાઈલ
                                     </span>
                                 @elseif($log->device_type === 'Tablet')
-                                    <span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 0.72rem;">
+                                    <span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 0.72rem; padding: 0.15rem 0.45rem;">
                                         <i class="ri-tablet-line"></i> ટેબલેટ
                                     </span>
                                 @else
-                                    <span class="badge" style="background: #fafaf9; color: #44403c; border: 1px solid #e7e5e4; font-size: 0.72rem;">
-                                        <i class="ri-macbook-line"></i> ડેસ્કટોપ / લેપટોપ
+                                    <span class="badge" style="background: #fafaf9; color: #44403c; border: 1px solid #e7e5e4; font-size: 0.72rem; padding: 0.15rem 0.45rem;">
+                                        <i class="ri-macbook-line"></i> ડેસ્કટોપ
                                     </span>
                                 @endif
-                                <span style="font-weight: 650; font-size: 0.82rem; color: #334155; font-family: var(--font-latin);">
-                                    {{ $log->os }}
-                                </span>
+                                <strong style="color: #0f172a; font-size: 0.84rem; font-family: var(--font-latin); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 190px; display: inline-block;" title="{{ $log->device_name ?: $log->os }}">
+                                    {{ $log->device_name ?: $log->os }}
+                                </strong>
                             </div>
-                            <div style="font-size: 0.76rem; color: #64748b; font-family: var(--font-latin);">
-                                <i class="ri-global-line" style="font-size: 0.78rem;"></i> {{ $log->browser }}
+                            <div style="font-size: 0.75rem; color: #64748b; font-family: var(--font-latin); display: flex; align-items: center; gap: 0.35rem;">
+                                <span>{{ $log->os }}</span>
+                                <span>•</span>
+                                <span>{{ $log->browser }}</span>
                             </div>
                         </td>
 
-                        <!-- IP & Location -->
-                        <td style="font-family: var(--font-latin); white-space: nowrap;">
-                            <div style="font-weight: 700; color: #0284c7; font-size: 0.82rem;">
-                                <i class="ri-router-line" style="font-size: 0.8rem;"></i> {{ $log->ip_address }}
+                        <!-- Exact Location & IP -->
+                        <td style="font-family: var(--font-latin); white-space: nowrap; max-width: 280px;">
+                            <div style="font-weight: 750; color: #b91c1c; font-size: 0.84rem; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem;" title="{{ $log->location }}">
+                                <i class="ri-map-pin-2-fill" style="color: #dc2626; font-size: 0.9rem; flex-shrink: 0;"></i>
+                                <span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 220px; display: inline-block;">
+                                    {{ $log->location ?: 'India' }}
+                                </span>
                             </div>
-                            <div style="font-size: 0.76rem; color: #64748b; display: flex; align-items: center; gap: 0.25rem; margin-top: 2px;">
-                                <i class="ri-map-pin-2-fill" style="color: #e11d48; font-size: 0.75rem;"></i> {{ $log->location ?: 'India' }}
+                            <div style="font-size: 0.76rem; color: #0284c7; font-weight: 600; display: flex; align-items: center; gap: 0.25rem;">
+                                <i class="ri-router-line" style="font-size: 0.78rem;"></i> {{ $log->ip_address }}
                             </div>
                         </td>
 
@@ -297,6 +302,20 @@
                 સિસ્ટમ & ક્લાયન્ટ વિગતો (Device & Network)
             </h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.85rem;">
+                <div style="grid-column: 1 / -1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.65rem 0.85rem;">
+                    <div style="font-size: 0.74rem; font-weight: 700; color: #475569; text-transform: uppercase;">
+                        <i class="ri-smartphone-line" style="color: #15803d;"></i> ચોક્કસ ડિવાઇસ નેમ & મોડેલ (Exact Device Model):
+                    </div>
+                    <div id="modalDeviceName" style="font-weight: 800; color: #0f172a; font-size: 0.98rem; font-family: var(--font-latin); margin-top: 3px;"></div>
+                </div>
+
+                <div style="grid-column: 1 / -1; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 0.65rem 0.85rem;">
+                    <div style="font-size: 0.74rem; font-weight: 700; color: #9f1239; text-transform: uppercase;">
+                        <i class="ri-map-pin-2-fill" style="color: #e11d48;"></i> ચોક્કસ લોકેશન & નેટવર્ક (Exact Location & ISP):
+                    </div>
+                    <div id="modalLocation" style="font-weight: 800; color: #9f1239; font-size: 0.96rem; font-family: var(--font-latin); margin-top: 3px;"></div>
+                </div>
+
                 <div>
                     <div style="font-size: 0.72rem; color: #64748b;">યુઝર / સબમિટર:</div>
                     <div id="modalUserName" style="font-weight: 700; color: #0f172a; font-size: 0.88rem;"></div>
@@ -321,11 +340,7 @@
                     <div style="font-size: 0.72rem; color: #64748b;">IP એડ્રેસ:</div>
                     <div id="modalIp" style="font-weight: 700; color: #0284c7; font-size: 0.88rem; font-family: var(--font-latin);"></div>
                 </div>
-                <div>
-                    <div style="font-size: 0.72rem; color: #64748b;">અંદાજિત લોકેશન:</div>
-                    <div id="modalLocation" style="font-weight: 650; color: #0f172a; font-size: 0.88rem;"></div>
-                </div>
-                <div>
+                <div style="grid-column: 1 / -1;">
                     <div style="font-size: 0.72rem; color: #64748b;">HTTP Method & URL:</div>
                     <div id="modalMethodUrl" style="font-size: 0.78rem; color: #475569; font-family: var(--font-latin); word-break: break-all;"></div>
                 </div>
@@ -378,11 +393,12 @@ function viewLogDetails(log) {
 
     document.getElementById('modalUserName').textContent = log.user_name || 'અજ્ઞાત';
     document.getElementById('modalUserContact').textContent = log.user_contact || 'N/A';
-    document.getElementById('modalDeviceType').textContent = log.device_type + (log.device_name ? ' (' + log.device_name + ')' : '');
+    document.getElementById('modalDeviceName').textContent = log.device_name || log.os || 'N/A';
+    document.getElementById('modalLocation').textContent = log.location || 'India (IN)';
+    document.getElementById('modalDeviceType').textContent = log.device_type || 'Desktop';
     document.getElementById('modalOS').textContent = log.os || 'N/A';
     document.getElementById('modalBrowser').textContent = log.browser || 'N/A';
     document.getElementById('modalIp').textContent = log.ip_address || '127.0.0.1';
-    document.getElementById('modalLocation').textContent = log.location || 'India';
     document.getElementById('modalMethodUrl').textContent = (log.method || 'POST') + ' ' + (log.url || '');
 
     const payloadWrap = document.getElementById('modalPayloadWrap');
