@@ -927,8 +927,14 @@ class AdminController extends Controller
 
     public function clearOldLogs(): RedirectResponse
     {
-        ActivityLog::where('created_at', '<', now()->subDays(60))->delete();
+        $deleted = ActivityLog::where('created_at', '<=', now()->subDays(90))->delete();
 
-        return redirect()->back()->with('success', '૬૦ દિવસથી જૂના તમામ લૉગ રેકોર્ડ્સ સાફ કરવામાં આવ્યા છે.');
+        ActivityLogger::logAdmin(
+            action: 'admin_logs_pruned',
+            description: "૯૦ દિવસથી જૂના તમામ ({$deleted}) લૉગ રેકોર્ડ્સ સાફ કરવામાં આવ્યા.",
+            extraPayload: ['deleted_count' => $deleted, 'retention_days' => 90]
+        );
+
+        return redirect()->back()->with('success', "૯૦ દિવસથી જૂના તમામ ({$deleted}) લૉગ રેકોર્ડ્સ સફળતાપૂર્વક સાફ કરવામાં આવ્યા છે.");
     }
 }

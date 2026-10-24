@@ -86,8 +86,13 @@
 <div class="admin-card">
     <div class="admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h3 class="admin-card-title">સિસ્ટમ એક્ટિવિટી & સબમિશન રેકોર્ડ</h3>
-            <p class="admin-card-desc">કોણે ક્યારે કયું ફોર્મ ભર્યું, મોબાઈલ કે કમ્પ્યુટરથી, લોકેશન અને સિસ્ટમ વિગતો સાથે</p>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <h3 class="admin-card-title" style="margin: 0;">સિસ્ટમ એક્ટિવિટી & સબમિશન રેકોર્ડ</h3>
+                <span class="badge" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.72rem; padding: 0.2rem 0.55rem; font-weight: 700;">
+                    <i class="ri-shield-check-line"></i> ઓટો-ડીલીટ: ૯૦ દિવસ
+                </span>
+            </div>
+            <p class="admin-card-desc">૯૦ દિવસ જૂના લૉગ્સ સિસ્ટમ દ્વારા આપમેળે (automatic) ડીલીટ થઈ જાય છે. કોણે ક્યારે કયું ફોર્મ ભર્યું, ડિવાઇસ અને લોકેશન સાથે.</p>
         </div>
 
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
@@ -121,10 +126,10 @@
                 @endif
             </form>
 
-            <form action="{{ route('admin.logs.clearOld') }}" method="POST" onsubmit="return confirm('શું આપ ખરેખર ૬૦ દિવસથી જૂના લૉગ્સ સાફ કરવા માંગો છો?');" style="margin: 0;">
+            <form action="{{ route('admin.logs.clearOld') }}" method="POST" onsubmit="return confirm('શું આપ ખરેખર ૯૦ દિવસથી જૂના તમામ લૉગ્સ સાફ કરવા માંગો છો?');" style="margin: 0;">
                 @csrf
-                <button type="submit" class="admin-header-btn admin-header-btn-site" style="color: #991b1b; border-color: #fecaca; background: #fef2f2; font-size: 0.8rem; padding: 0.42rem 0.75rem;" title="૬૦ દિવસથી જૂના લૉગ્સ દૂર કરો">
-                    <i class="ri-delete-bin-line"></i> જૂના લૉગ સાફ કરો
+                <button type="submit" class="admin-header-btn admin-header-btn-site" style="color: #991b1b; border-color: #fecaca; background: #fef2f2; font-size: 0.8rem; padding: 0.42rem 0.75rem;" title="૯૦ દિવસથી જૂના લૉગ્સ દૂર કરો">
+                    <i class="ri-delete-bin-line"></i> ૯૦ દિવસથી જૂના સાફ કરો
                 </button>
             </form>
         </div>

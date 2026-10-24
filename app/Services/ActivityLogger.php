@@ -71,7 +71,7 @@ class ActivityLogger
                 $extraPayload
             );
 
-            return ActivityLog::create([
+            $entry = ActivityLog::create([
                 'user_type' => $userType,
                 'user_id' => $userId,
                 'user_name' => $userName,
@@ -88,6 +88,18 @@ class ActivityLogger
                 'method' => $request->method(),
                 'payload' => $sanitizedPayload,
             ]);
+
+            // Self-healing automatic retention: prune logs older than 90 days (~2% of requests)
+            // Guarantees automatic 90-day cleanup even without an active system cron daemon
+            if (random_int(1, 50) === 1) {
+                try {
+                    ActivityLog::where('created_at', '<=', now()->subDays(90))->delete();
+                } catch (Throwable $ignore) {
+                    // Failsafe
+                }
+            }
+
+            return $entry;
         } catch (Throwable $e) {
             // Failsafe: Never allow logging issues to interrupt the main user workflow
             report($e);
