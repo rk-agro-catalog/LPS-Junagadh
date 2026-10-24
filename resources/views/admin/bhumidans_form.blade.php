@@ -27,7 +27,7 @@
     @endif
 
     <div class="admin-card">
-        <form action="{{ $mode === 'create' ? route('admin.bhumidans.store') : route('admin.bhumidans.updateRecord', $bhumidan->id) }}" method="POST">
+        <form action="{{ $mode === 'create' ? route('admin.bhumidans.store') : route('admin.bhumidans.updateRecord', $bhumidan->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-grid">
@@ -79,6 +79,25 @@
                 <div class="form-group">
                     <label class="form-label">ટ્રાન્ઝેક્શન / ચેક નંબર</label>
                     <input type="text" name="transaction_id" class="form-control" value="{{ old('transaction_id', $bhumidan->transaction_id) }}" placeholder="ચેક નંબર અથવા UPI ID...">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">પેમેન્ટ સ્ક્રીનશોટ / રસીદ સ્લિપ (Payment Screenshot / Slip)</label>
+                    @if($bhumidan->payment_screenshot)
+                        <div style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem; background: #f8fafc; padding: 0.75rem; border-radius: 10px; border: 1px solid #e2e8f0;">
+                            <img src="{{ asset($bhumidan->payment_screenshot) }}" alt="Payment Proof" style="height: 60px; width: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                            <div>
+                                <div style="font-size: 0.82rem; font-weight: 600; color: #334155;">હાલ અપલોડ થયેલ સ્લિપ</div>
+                                <a href="{{ asset($bhumidan->payment_screenshot) }}" target="_blank" style="font-size: 0.8rem; color: #0284c7; text-decoration: underline; font-weight: 600;">
+                                    <i class="ri-external-link-line"></i> પૂર્ણ સાઈઝમાં જુઓ
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                    <input type="file" name="payment_screenshot" class="form-control" accept="image/*,application/pdf">
+                    <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">
+                        નવી સ્લિપ બદલવા અથવા અપલોડ કરવા માટે ફાઇલ સિલેક્ટ કરો (JPG, PNG, WebP, PDF - મહત્તમ 5MB)
+                    </div>
                 </div>
 
                 <div class="form-group">

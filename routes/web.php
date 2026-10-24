@@ -106,4 +106,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Admin Security & Password
     Route::get('/security', [AdminController::class, 'securitySettings'])->name('security');
     Route::post('/security/password', [AdminController::class, 'updatePassword'])->name('security.password');
+
+    // Activity & Audit Logs
+    Route::get('/logs', [AdminController::class, 'logs'])->name('logs');
+    Route::delete('/logs/{id}', [AdminController::class, 'deleteLog'])->name('logs.destroy');
+    Route::post('/logs/clear-old', [AdminController::class, 'clearOldLogs'])->name('logs.clearOld');
 });

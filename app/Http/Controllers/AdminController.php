@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Bhumidan;
 use App\Models\BookingInquiry;
 use App\Models\ContactMessage;
 use App\Models\Event;
 use App\Models\GalleryItem;
 use App\Models\Member;
+use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -86,16 +88,29 @@ class AdminController extends Controller
             'sq_yards' => 'required|integer|min:1|max:5000',
             'payment_method' => 'required|string',
             'transaction_id' => 'nullable|string|max:100',
+            'payment_screenshot' => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:5120',
             'status' => 'required|in:pending,verified,completed',
             'is_featured' => 'nullable|boolean',
             'notes' => 'nullable|string|max:1000',
         ]);
 
+        $screenshotPath = null;
+        if ($request->hasFile('payment_screenshot')) {
+            $file = $request->file('payment_screenshot');
+            $filename = 'bhumidan_admin_'.time().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/payment_screenshots');
+            if (! file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $screenshotPath = 'uploads/payment_screenshots/'.$filename;
+        }
+
         $receiptNumber = 'LPS-JND-'.date('Y').'-'.strtoupper(Str::random(5));
         $rate = 2500;
         $totalAmount = $validated['sq_yards'] * $rate;
 
-        Bhumidan::create([
+        $bhumidan = Bhumidan::create([
             'receipt_number' => $receiptNumber,
             'donor_name' => $validated['donor_name'],
             'donor_name_gujarati' => $validated['donor_name'],
@@ -107,10 +122,24 @@ class AdminController extends Controller
             'total_amount' => $totalAmount,
             'payment_method' => $validated['payment_method'],
             'transaction_id' => $validated['transaction_id'] ?? null,
+            'payment_screenshot' => $screenshotPath,
             'status' => $validated['status'],
             'is_featured' => $request->boolean('is_featured'),
             'notes' => $validated['notes'] ?? null,
         ]);
+
+        ActivityLogger::logAdmin(
+            action: 'admin_bhumidan_created',
+            description: "એડમિન દ્વારા નવા ભૂમિદાતા ઉમેરાયા: {$bhumidan->donor_name} ({$bhumidan->sq_yards} વાર - ₹".number_format($totalAmount).')',
+            request: $request,
+            extraPayload: [
+                'receipt_number' => $receiptNumber,
+                'donor_name' => $bhumidan->donor_name,
+                'phone' => $bhumidan->phone,
+                'sq_yards' => $bhumidan->sq_yards,
+                'total_amount' => $totalAmount,
+            ]
+        );
 
         return redirect()->route('admin.bhumidans')->with('success', 'નવા ભૂમિદાતાની નોંધણી સફળતાપૂર્વક થઈ ગઈ છે! રસીદ નંબર: '.$receiptNumber);
     }
@@ -137,10 +166,23 @@ class AdminController extends Controller
             'sq_yards' => 'required|integer|min:1|max:5000',
             'payment_method' => 'required|string',
             'transaction_id' => 'nullable|string|max:100',
+            'payment_screenshot' => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:5120',
             'status' => 'required|in:pending,verified,completed',
             'is_featured' => 'nullable|boolean',
             'notes' => 'nullable|string|max:1000',
         ]);
+
+        $screenshotPath = $bhumidan->payment_screenshot;
+        if ($request->hasFile('payment_screenshot')) {
+            $file = $request->file('payment_screenshot');
+            $filename = 'bhumidan_admin_'.time().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/payment_screenshots');
+            if (! file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $screenshotPath = 'uploads/payment_screenshots/'.$filename;
+        }
 
         $totalAmount = $validated['sq_yards'] * 2500;
 
@@ -154,10 +196,18 @@ class AdminController extends Controller
             'total_amount' => $totalAmount,
             'payment_method' => $validated['payment_method'],
             'transaction_id' => $validated['transaction_id'] ?? null,
+            'payment_screenshot' => $screenshotPath,
             'status' => $validated['status'],
             'is_featured' => $request->boolean('is_featured'),
             'notes' => $validated['notes'] ?? null,
         ]);
+
+        ActivityLogger::logAdmin(
+            action: 'admin_bhumidan_updated',
+            description: "એડમિન દ્વારા દાતા વિગતો સુધારાઈ: {$bhumidan->donor_name} (રસીદ: {$bhumidan->receipt_number})",
+            request: $request,
+            extraPayload: ['receipt_number' => $bhumidan->receipt_number]
+        );
 
         return redirect()->route('admin.bhumidans')->with('success', 'દાતાશ્રીની વિગતો સફળતાપૂર્વક સુધારાઈ ગઈ છે.');
     }
@@ -170,6 +220,13 @@ class AdminController extends Controller
             'is_featured' => $request->boolean('is_featured'),
         ]);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_bhumidan_status_changed',
+            description: "દાતા સ્ટેટસ બદલાયું ({$donation->receipt_number}): {$donation->status}",
+            request: $request,
+            extraPayload: ['receipt_number' => $donation->receipt_number, 'status' => $donation->status]
+        );
+
         return redirect()->back()->with('success', 'દાતાની વિગતો સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.');
     }
 
@@ -177,7 +234,14 @@ class AdminController extends Controller
     {
         $bhumidan = Bhumidan::findOrFail($id);
         $receipt = $bhumidan->receipt_number;
+        $name = $bhumidan->donor_name;
         $bhumidan->delete();
+
+        ActivityLogger::logAdmin(
+            action: 'admin_bhumidan_deleted',
+            description: "એડમિન દ્વારા દાતા રેકોર્ડ ડીલીટ કરાયો: {$name} ({$receipt})",
+            extraPayload: ['receipt_number' => $receipt, 'donor_name' => $name]
+        );
 
         return redirect()->route('admin.bhumidans')->with('success', 'ભૂમિદાન રસીદ ('.$receipt.') સફળતાપૂર્વક ડીલીટ કરવામાં આવી છે.');
     }
@@ -244,10 +308,23 @@ class AdminController extends Controller
 
         $inquiryNumber = 'INQ-'.date('Ymd').'-'.rand(100, 999);
 
-        BookingInquiry::create(array_merge($validated, [
+        $booking = BookingInquiry::create(array_merge($validated, [
             'inquiry_number' => $inquiryNumber,
             'required_rooms' => $validated['required_rooms'] ?? 0,
         ]));
+
+        ActivityLogger::logAdmin(
+            action: 'admin_booking_created',
+            description: "એડમિન દ્વારા નવું બુકિંગ ઉમેરાયું: {$booking->applicant_name} ({$booking->facility_name} - {$booking->event_type})",
+            request: $request,
+            extraPayload: [
+                'inquiry_number' => $inquiryNumber,
+                'applicant_name' => $booking->applicant_name,
+                'phone' => $booking->phone,
+                'facility_name' => $booking->facility_name,
+                'event_date' => $booking->event_date,
+            ]
+        );
 
         return redirect()->route('admin.bookings')->with('success', 'નવું હોલ/પ્લોટ બુકિંગ સફળતાપૂર્વક નોંધાઈ ગયું છે! બુકિંગ નં: '.$inquiryNumber);
     }
@@ -283,6 +360,13 @@ class AdminController extends Controller
 
         $booking->update($validated);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_booking_updated',
+            description: "એડમિન દ્વારા બુકિંગ વિગતો સુધારાઈ: {$booking->applicant_name} ({$booking->inquiry_number})",
+            request: $request,
+            extraPayload: ['inquiry_number' => $booking->inquiry_number]
+        );
+
         return redirect()->route('admin.bookings')->with('success', 'બુકિંગ વિગતો સફળતાપૂર્વક સુધારાઈ ગઈ છે.');
     }
 
@@ -294,13 +378,28 @@ class AdminController extends Controller
             'admin_notes' => $request->input('admin_notes'),
         ]);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_booking_status_changed',
+            description: "બુકિંગ સ્ટેટસ બદલાયું ({$booking->inquiry_number}): {$booking->status}",
+            request: $request,
+            extraPayload: ['inquiry_number' => $booking->inquiry_number, 'status' => $booking->status]
+        );
+
         return redirect()->back()->with('success', 'બુકિંગ ઇન્ક્વાયરી સ્ટેટસ અપડેટ થઈ ગયું છે.');
     }
 
     public function deleteBooking($id): RedirectResponse
     {
         $booking = BookingInquiry::findOrFail($id);
+        $num = $booking->inquiry_number;
+        $name = $booking->applicant_name;
         $booking->delete();
+
+        ActivityLogger::logAdmin(
+            action: 'admin_booking_deleted',
+            description: "એડમિન દ્વારા બુકિંગ રેકોર્ડ ડીલીટ કરાયો: {$name} ({$num})",
+            extraPayload: ['inquiry_number' => $num, 'applicant_name' => $name]
+        );
 
         return redirect()->route('admin.bookings')->with('success', 'બુકિંગ રેકોર્ડ સફળતાપૂર્વક ડીલીટ થઈ ગયો છે.');
     }
@@ -364,9 +463,16 @@ class AdminController extends Controller
 
         $code = 'LPS-M-'.rand(1000, 9999);
 
-        Member::create(array_merge($validated, [
+        $member = Member::create(array_merge($validated, [
             'member_code' => $code,
         ]));
+
+        ActivityLogger::logAdmin(
+            action: 'admin_member_created',
+            description: "એડમિન દ્વારા નવા જ્ઞાતિ સભ્ય નોંધાયા: {$member->full_name} ({$code})",
+            request: $request,
+            extraPayload: ['member_code' => $code, 'full_name' => $member->full_name, 'phone' => $member->phone]
+        );
 
         return redirect()->route('admin.members')->with('success', 'નવા જ્ઞાતિ સભ્યની નોંધણી સફળતાપૂર્વક થઈ ગઈ છે! સભ્ય કોડ: '.$code);
     }
@@ -404,13 +510,28 @@ class AdminController extends Controller
 
         $member->update($validated);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_member_updated',
+            description: "એડમિન દ્વારા સભ્ય વિગતો સુધારાઈ: {$member->full_name} ({$member->member_code})",
+            request: $request,
+            extraPayload: ['member_code' => $member->member_code]
+        );
+
         return redirect()->route('admin.members')->with('success', 'સભ્ય વિગતો સફળતાપૂર્વક સુધારાઈ ગઈ છે.');
     }
 
     public function deleteMember($id): RedirectResponse
     {
         $member = Member::findOrFail($id);
+        $code = $member->member_code;
+        $name = $member->full_name;
         $member->delete();
+
+        ActivityLogger::logAdmin(
+            action: 'admin_member_deleted',
+            description: "એડમિન દ્વારા સભ્ય રેકોર્ડ ડીલીટ કરાયો: {$name} ({$code})",
+            extraPayload: ['member_code' => $code, 'full_name' => $name]
+        );
 
         return redirect()->route('admin.members')->with('success', 'સભ્ય રેકોર્ડ સફળતાપૂર્વક ડીલીટ થઈ ગયો છે.');
     }
@@ -453,7 +574,7 @@ class AdminController extends Controller
             'is_featured' => 'nullable|boolean',
         ]);
 
-        GalleryItem::create([
+        $item = GalleryItem::create([
             'title' => $validated['title'],
             'category' => $validated['category'],
             'media_type' => $validated['media_type'],
@@ -462,6 +583,13 @@ class AdminController extends Controller
             'caption' => $validated['caption'] ?? null,
             'is_featured' => $request->boolean('is_featured'),
         ]);
+
+        ActivityLogger::logAdmin(
+            action: 'admin_gallery_created',
+            description: "એડમિન દ્વારા ગેલેરી મીડિયા ઉમેરાયું: {$item->title} ({$item->media_type})",
+            request: $request,
+            extraPayload: ['title' => $item->title, 'category' => $item->category, 'media_type' => $item->media_type]
+        );
 
         return redirect()->route('admin.gallery')->with('success', 'ગેલેરી આઇટમ સફળતાપૂર્વક ઉમેરાઈ ગઈ છે.');
     }
@@ -500,13 +628,27 @@ class AdminController extends Controller
             'is_featured' => $request->boolean('is_featured'),
         ]);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_gallery_updated',
+            description: "એડમિન દ્વારા ગેલેરી વિગત સુધારાઈ: {$item->title}",
+            request: $request,
+            extraPayload: ['title' => $item->title]
+        );
+
         return redirect()->route('admin.gallery')->with('success', 'ગેલેરી વિગતો સફળતાપૂર્વક સુધારાઈ ગઈ છે.');
     }
 
     public function deleteGallery($id): RedirectResponse
     {
         $item = GalleryItem::findOrFail($id);
+        $title = $item->title;
         $item->delete();
+
+        ActivityLogger::logAdmin(
+            action: 'admin_gallery_deleted',
+            description: "એડમિન દ્વારા ગેલેરી આઇટમ ડીલીટ કરાઈ: {$title}",
+            extraPayload: ['title' => $title]
+        );
 
         return redirect()->route('admin.gallery')->with('success', 'ગેલેરી આઇટમ સફળતાપૂર્વક ડીલીટ થઈ ગઈ છે.');
     }
@@ -569,11 +711,18 @@ class AdminController extends Controller
 
         $slug = Str::slug($validated['title']).'-'.rand(100, 999);
 
-        Event::create(array_merge($validated, [
+        $event = Event::create(array_merge($validated, [
             'slug' => $slug,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active', true),
         ]));
+
+        ActivityLogger::logAdmin(
+            action: 'admin_event_created',
+            description: "એડમિન દ્વારા નવો કાર્યક્રમ ઉમેરાયો: {$event->title} ({$event->category})",
+            request: $request,
+            extraPayload: ['title' => $event->title, 'category' => $event->category, 'event_date' => $event->event_date]
+        );
 
         return redirect()->route('admin.events')->with('success', 'નવો કાર્યક્રમ (ઇવેન્ટ) સફળતાપૂર્વક ઉમેરાઈ ગયો છે!');
     }
@@ -611,13 +760,27 @@ class AdminController extends Controller
             'is_active' => $request->boolean('is_active'),
         ]));
 
+        ActivityLogger::logAdmin(
+            action: 'admin_event_updated',
+            description: "એડમિન દ્વારા કાર્યક્રમ વિગત સુધારાઈ: {$event->title}",
+            request: $request,
+            extraPayload: ['title' => $event->title]
+        );
+
         return redirect()->route('admin.events')->with('success', 'કાર્યક્રમની વિગતો સફળતાપૂર્વક સુધારાઈ ગઈ છે.');
     }
 
     public function deleteEvent($id): RedirectResponse
     {
         $event = Event::findOrFail($id);
+        $title = $event->title;
         $event->delete();
+
+        ActivityLogger::logAdmin(
+            action: 'admin_event_deleted',
+            description: "એડમિન દ્વારા કાર્યક્રમ ડીલીટ કરાયો: {$title}",
+            extraPayload: ['title' => $title]
+        );
 
         return redirect()->route('admin.events')->with('success', 'કાર્યક્રમ સફળતાપૂર્વક ડીલીટ થઈ ગયો છે.');
     }
@@ -663,6 +826,74 @@ class AdminController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        ActivityLogger::logAdmin(
+            action: 'admin_password_changed',
+            description: 'એડમિન એકાઉન્ટ પાસવર્ડ સફળતાપૂર્વક બદલવામાં આવ્યો',
+            request: $request
+        );
+
         return redirect()->back()->with('success', 'એડમિન પાસવર્ડ સફળતાપૂર્વક બદલાઈ ગયો છે! આપનું એકાઉન્ટ સુરક્ષિત છે.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 8. Activity & Audit Logs
+    |--------------------------------------------------------------------------
+    */
+    public function logs(Request $request): View
+    {
+        $query = ActivityLog::orderBy('id', 'desc');
+
+        if ($request->filled('user_type')) {
+            $query->where('user_type', $request->user_type);
+        }
+
+        if ($request->filled('device_type')) {
+            $query->where('device_type', $request->device_type);
+        }
+
+        if ($request->filled('action')) {
+            $query->where('action', $request->action);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('user_name', 'like', "%{$search}%")
+                    ->orWhere('user_contact', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('ip_address', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%")
+                    ->orWhere('action', 'like', "%{$search}%");
+            });
+        }
+
+        $stats = [
+            'total' => ActivityLog::count(),
+            'today' => ActivityLog::whereDate('created_at', now()->toDateString())->count(),
+            'public' => ActivityLog::where('user_type', 'public')->count(),
+            'admin' => ActivityLog::where('user_type', 'admin')->count(),
+            'mobile' => ActivityLog::where('device_type', 'Mobile')->count(),
+            'desktop' => ActivityLog::where('device_type', 'Desktop')->count(),
+        ];
+
+        $logs = $query->paginate(25)->withQueryString();
+
+        return view('admin.logs', compact('logs', 'stats'));
+    }
+
+    public function deleteLog($id): RedirectResponse
+    {
+        $log = ActivityLog::findOrFail($id);
+        $log->delete();
+
+        return redirect()->back()->with('success', 'લૉગ રેકોર્ડ સફળતાપૂર્વક દૂર કરવામાં આવ્યો છે.');
+    }
+
+    public function clearOldLogs(): RedirectResponse
+    {
+        ActivityLog::where('created_at', '<', now()->subDays(60))->delete();
+
+        return redirect()->back()->with('success', '૬૦ દિવસથી જૂના તમામ લૉગ રેકોર્ડ્સ સાફ કરવામાં આવ્યા છે.');
     }
 }

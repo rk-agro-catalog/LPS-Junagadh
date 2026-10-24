@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,11 +39,32 @@ class AuthController extends Controller
         $remember = $request->boolean('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
             $request->session()->regenerate();
+
+            ActivityLogger::log(
+                action: 'admin_login_success',
+                description: "એડમિન યુઝર '{$user->name}' ({$user->email}) સફળતાપૂર્વક લૉગિન થયા.",
+                request: $request,
+                extraPayload: ['email' => $user->email],
+                userType: 'admin',
+                userName: $user->name,
+                userContact: $user->email
+            );
 
             return redirect()->intended(route('admin.dashboard'))
                 ->with('success', 'એડમિન પોર્ટલમાં આપનું હાર્દિક સ્વાગત છે!');
         }
+
+        ActivityLogger::log(
+            action: 'admin_login_failed',
+            description: "એડમિન લૉગિન નિષ્ફળ પ્રયાસ: '{$credentials['email']}' (અમાન્ય પાસવર્ડ અથવા ઇમેઇલ).",
+            request: $request,
+            extraPayload: ['attempted_email' => $credentials['email']],
+            userType: 'public',
+            userName: 'અજાણ્યો લૉગિન પ્રયાસ',
+            userContact: $credentials['email']
+        );
 
         return back()
             ->withErrors([
@@ -56,6 +78,19 @@ class AuthController extends Controller
      */
     public function logout(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+
+        if ($user) {
+            ActivityLogger::log(
+                action: 'admin_logout',
+                description: "એડમિન યુઝર '{$user->name}' ({$user->email}) લૉગ આઉટ થયા.",
+                request: $request,
+                userType: 'admin',
+                userName: $user->name,
+                userContact: $user->email
+            );
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();

@@ -75,7 +75,12 @@
                             ₹ {{ number_format($d->total_amount) }}/-
                         </td>
                         <td style="text-align: center; font-size: 0.8rem; color: #475569; white-space: nowrap;">
-                            {{ $d->payment_method }}
+                            <div>{{ $d->payment_method }}</div>
+                            @if($d->payment_screenshot)
+                                <a href="{{ asset($d->payment_screenshot) }}" target="_blank" class="badge" style="background: #e0f2fe; color: #0369a1; text-decoration: none; margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; font-size: 0.72rem; padding: 0.2rem 0.5rem;" title="ચુકવણી સ્ક્રીનશોટ જુઓ">
+                                    <i class="ri-image-line"></i> સ્લિપ જુઓ
+                                </a>
+                            @endif
                         </td>
                         <td style="text-align: center; white-space: nowrap;">
                             <span class="badge {{ $d->status === 'verified' ? 'badge-green' : 'badge-maroon' }}" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;">
@@ -84,6 +89,11 @@
                         </td>
                         <td style="text-align: center;">
                             <div class="admin-actions">
+                                @if($d->payment_screenshot)
+                                    <a href="{{ asset($d->payment_screenshot) }}" target="_blank" class="btn-admin-action" style="background: #eff6ff; color: #2563eb;" title="પેમેન્ટ સ્ક્રીનશોટ">
+                                        <i class="ri-file-image-line"></i>
+                                    </a>
+                                @endif
                                 <a href="{{ route('admin.bhumidans.edit', $d->id) }}" class="btn-admin-action edit" title="વિગતો સુધારો">
                                     <i class="ri-edit-line"></i>
                                 </a>

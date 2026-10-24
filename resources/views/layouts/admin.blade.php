@@ -98,6 +98,12 @@
                 <div class="admin-nav-label">પ્રશાસન & સુરક્ષા (Administration)</div>
                 <ul class="admin-nav">
                     <li>
+                        <a href="{{ route('admin.logs') }}" class="{{ request()->routeIs('admin.logs*') ? 'active' : '' }}">
+                            <i class="ri-history-line"></i>
+                            <span>એક્ટિવિટી & સબમિશન લૉગ્સ</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.security') }}" class="{{ request()->routeIs('admin.security*') ? 'active' : '' }}">
                             <i class="ri-shield-keyhole-line"></i>
                             <span>સુરક્ષા & પાસવર્ડ</span>

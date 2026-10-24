@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('bhumidan.store') }}" method="POST">
+            <form action="{{ route('bhumidan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
@@ -126,13 +126,36 @@
                     </div>
 
                     <div class="form-group full-width">
+                        <label class="form-label" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.25rem;">
+                            <span><i class="ri-image-add-line" style="color: var(--color-primary-light);"></i> પેમેન્ટ સ્ક્રીનશોટ / રસીદ ફોટો અપલોડ કરો</span>
+                            <span style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: normal;">(વૈકલ્પિક - JPG, PNG, WEBP, PDF max 5MB)</span>
+                        </label>
+                        <div style="border: 2px dashed var(--color-border); border-radius: var(--radius-md); padding: 1rem; text-align: center; background: #fafafa; transition: border-color 0.2s;" id="screenshotDropZone">
+                            <input type="file" name="payment_screenshot" id="paymentScreenshotInput" accept="image/*,.pdf" style="display: none;" onchange="handleScreenshotSelect(this)">
+                            <label for="paymentScreenshotInput" style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin: 0;">
+                                <i class="ri-upload-cloud-2-line" style="font-size: 2.2rem; color: var(--color-primary-light);"></i>
+                                <span style="font-weight: 600; color: var(--color-maroon); font-size: 0.92rem;">સ્ક્રીનશોટ ફાઇલ પસંદ કરો</span>
+                                <span style="font-size: 0.78rem; color: var(--color-text-muted);" id="screenshotFileName">Google Pay / PhonePe / UPI પેમેન્ટનો સ્ક્રીનશોટ</span>
+                            </label>
+                            <div id="screenshotPreviewWrapper" style="display: none; margin-top: 0.75rem;">
+                                <img id="screenshotPreviewImg" src="" alt="Screenshot Preview" style="max-height: 140px; border-radius: 6px; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+                                <div style="margin-top: 0.4rem;">
+                                    <button type="button" onclick="clearScreenshotSelect()" class="btn btn-outline-gold" style="padding: 0.2rem 0.7rem; font-size: 0.76rem; color: #dc2626; border-color: #fca5a5;">
+                                        <i class="ri-delete-bin-line"></i> રદ કરો
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
                         <label class="form-label">સંકલ્પ સંદેશ / નોંધ</label>
                         <textarea name="notes" rows="2" class="form-control" placeholder="દા.ત. પરિવાર વતી શુભ સંકલ્પ..."></textarea>
                     </div>
 
                     <div class="form-group full-width">
-                        <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.75rem;">
-                            <i class="ri-check-line"></i> ભૂમિદાન સંકલ્પ સબમિટ કરો & પહોંચ મેળવો
+                        <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.75rem; font-weight: 700;">
+                            <i class="ri-check-line"></i> ભૂમિદાન સંકલ્પ સબમિટ કરો
                         </button>
                     </div>
                 </div>
@@ -225,9 +248,9 @@
                         <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon);">રસીદ નં.</th>
                         <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon);">દાતાશ્રીનું નામ</th>
                         <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon);">ગામ / શહેર</th>
-                        <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon); text-align: center;">ચોરસ વાર</th>
+                        <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon);">ચોરસ વાર</th>
                         <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon); text-align: right;">સહયોગ રકમ</th>
-                        <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon); text-align: center;">ડિજિટલ રસીદ</th>
+                        <th style="padding: 0.75rem; font-weight:800; color: var(--color-maroon); text-align: center;">સ્થિતિ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -252,9 +275,9 @@
                                 ₹ {{ number_format($donor->total_amount) }}/-
                             </td>
                             <td style="padding: 0.75rem; text-align: center;">
-                                <a href="{{ route('receipt', $donor->receipt_number) }}" class="btn btn-outline-gold" style="padding: 0.25rem 0.65rem; font-size: 0.78rem;">
-                                    <i class="ri-file-text-line"></i> રસીદ જુઓ
-                                </a>
+                                <span class="badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 0.78rem; padding: 0.25rem 0.65rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+                                    <i class="ri-checkbox-circle-fill"></i> નોંધાયેલ દાતા
+                                </span>
                             </td>
                         </tr>
                     @empty
@@ -273,5 +296,47 @@
         </div>
     </div>
 </div>
+
+<script>
+function handleScreenshotSelect(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const fileNameEl = document.getElementById('screenshotFileName');
+        const previewWrap = document.getElementById('screenshotPreviewWrapper');
+        const previewImg = document.getElementById('screenshotPreviewImg');
+        const dropZone = document.getElementById('screenshotDropZone');
+
+        fileNameEl.textContent = 'પસંદ કરેલ: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+        dropZone.style.borderColor = 'var(--color-gold)';
+        dropZone.style.background = '#fefce8';
+
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewWrap.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewWrap.style.display = 'none';
+        }
+    }
+}
+
+function clearScreenshotSelect() {
+    const input = document.getElementById('paymentScreenshotInput');
+    const fileNameEl = document.getElementById('screenshotFileName');
+    const previewWrap = document.getElementById('screenshotPreviewWrapper');
+    const previewImg = document.getElementById('screenshotPreviewImg');
+    const dropZone = document.getElementById('screenshotDropZone');
+
+    input.value = '';
+    fileNameEl.textContent = 'Google Pay / PhonePe / UPI પેમેન્ટનો સ્ક્રીનશોટ';
+    previewImg.src = '';
+    previewWrap.style.display = 'none';
+    dropZone.style.borderColor = 'var(--color-border)';
+    dropZone.style.background = '#fafafa';
+}
+</script>
 
 @endsection

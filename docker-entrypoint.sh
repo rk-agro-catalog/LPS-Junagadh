@@ -15,10 +15,10 @@ if [ "${DB_CONNECTION}" = "sqlite" ] || [ -z "${DB_CONNECTION}" ]; then
     chmod 664 /var/www/html/database/database.sqlite
 fi
 
-# Ensure storage directories exist and are writable
-mkdir -p /var/www/html/storage/framework/{sessions,views,cache/data,cache/locks} /var/www/html/storage/logs
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Ensure storage and upload directories exist and are writable
+mkdir -p /var/www/html/storage/framework/{sessions,views,cache/data,cache/locks} /var/www/html/storage/logs /var/www/html/public/uploads/payment_screenshots
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/uploads
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/uploads
 
 # Generate app key if missing
 if [ -z "$APP_KEY" ]; then
