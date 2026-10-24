@@ -53,9 +53,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Global login fallback for auth middleware
 Route::get('/login', fn () => redirect()->route('admin.login'))->name('login');
 
-// Protected Admin Routes (Requires Authentication)
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+// Protected Admin Routes (Requires Authentication & 30-min Inactivity Timeout)
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.timeout'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/auto-logout', [AuthController::class, 'autoLogout'])->name('autoLogout');
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Bhumidan Donors CRUD

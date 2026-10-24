@@ -243,6 +243,55 @@
                 toggleAdminDrawer(false);
             }
         });
+
+        // 1. DataTable Per-Page Selector Helper
+        function updateTablePerPage(val) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('per_page', val);
+            url.searchParams.delete('page');
+            return url.toString();
+        }
+
+        // 2. Global Client System Telemetry on Form Submit
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            if (!form || form.tagName !== 'FORM') return;
+            let input = form.querySelector('input[name="_client_system"]');
+            if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = '_client_system';
+                form.appendChild(input);
+            }
+            input.value = JSON.stringify({
+                screen: (window.screen ? window.screen.width + 'x' + window.screen.height : ''),
+                viewport: window.innerWidth + 'x' + window.innerHeight,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+                language: navigator.language || '',
+                touch: ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'yes' : 'no'
+            });
+        }, true);
+
+        // 3. 30-Minute Inactivity Auto-Logout Watchdog with Audit Logging
+        (function() {
+            const INACTIVITY_LIMIT_MS = 30 * 60 * 1000; // 30 minutes in milliseconds
+            let timeoutTimer = null;
+
+            function resetInactivityTimer() {
+                if (timeoutTimer) clearTimeout(timeoutTimer);
+                timeoutTimer = setTimeout(function() {
+                    // Redirect to auto-logout endpoint which records audit log and terminates session
+                    window.location.href = "{{ route('admin.autoLogout') }}";
+                }, INACTIVITY_LIMIT_MS);
+            }
+
+            const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+            activityEvents.forEach(function(evt) {
+                window.addEventListener(evt, resetInactivityTimer, { passive: true });
+            });
+
+            resetInactivityTimer();
+        })();
     </script>
     @stack('scripts')
 </body>

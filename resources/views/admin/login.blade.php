@@ -120,6 +120,13 @@
             </div>
         @endif
 
+        @if(session('warning'))
+            <div class="alert" style="background: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
+                <i class="ri-time-line" style="font-size: 1.2rem; flex-shrink: 0; color: #d97706;"></i>
+                <div style="font-size: 0.88rem;">{{ session('warning') }}</div>
+            </div>
+        @endif
+
         @if($errors->any())
             <div class="alert" style="background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
                 <i class="ri-error-warning-fill" style="font-size: 1.2rem; flex-shrink: 0; color: #dc2626;"></i>
@@ -190,6 +197,26 @@
                 const isPassword = passwordInput.getAttribute('type') === 'password';
                 passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
                 toggleIcon.className = isPassword ? 'ri-eye-off-line' : 'ri-eye-line';
+            });
+        }
+
+        const loginForm = document.querySelector('form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function() {
+                let input = this.querySelector('input[name="_client_system"]');
+                if (!input) {
+                    input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = '_client_system';
+                    this.appendChild(input);
+                }
+                input.value = JSON.stringify({
+                    screen: (window.screen ? window.screen.width + 'x' + window.screen.height : ''),
+                    viewport: window.innerWidth + 'x' + window.innerHeight,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+                    language: navigator.language || '',
+                    touch: ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'yes' : 'no'
+                });
             });
         }
     </script>

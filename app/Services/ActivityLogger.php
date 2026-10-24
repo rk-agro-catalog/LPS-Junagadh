@@ -37,6 +37,29 @@ class ActivityLogger
             $ip = self::resolveClientIp($request);
             $location = self::resolveLocation($request);
 
+            // Extract client-side system telemetry if present in request
+            $clientSystem = [];
+            if ($rawClient = $request->input('_client_system')) {
+                if (is_string($rawClient)) {
+                    $decoded = json_decode($rawClient, true);
+                    if (is_array($decoded)) {
+                        $clientSystem = $decoded;
+                    }
+                } elseif (is_array($rawClient)) {
+                    $clientSystem = $rawClient;
+                }
+            }
+
+            if (! empty($clientSystem['screen'])) {
+                $deviceInfo['device_name'] .= ' ['.$clientSystem['screen'].']';
+            }
+
+            if (! empty($clientSystem['timezone'])) {
+                if ($location === 'India (IN)' || $location === 'Localhost / Internal') {
+                    $location .= ' ('.$clientSystem['timezone'].')';
+                }
+            }
+
             $userId = null;
             if ($userType === 'admin' && Auth::check()) {
                 $user = Auth::user();
@@ -46,7 +69,8 @@ class ActivityLogger
             }
 
             $sanitizedPayload = array_merge(
-                self::sanitizePayload($request->except(['password', 'password_confirmation', '_token'])),
+                self::sanitizePayload($request->except(['password', 'password_confirmation', '_token', '_client_system'])),
+                ! empty($clientSystem) ? ['_client_system' => $clientSystem] : [],
                 $extraPayload
             );
 

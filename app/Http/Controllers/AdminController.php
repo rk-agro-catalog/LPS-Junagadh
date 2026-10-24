@@ -65,7 +65,12 @@ class AdminController extends Controller
             $query->where('status', $request->status);
         }
 
-        $bhumidans = $query->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $bhumidans = $query->paginate($perPage)->withQueryString();
 
         return view('admin.bhumidans', compact('bhumidans'));
     }
@@ -268,7 +273,12 @@ class AdminController extends Controller
             });
         }
 
-        $bookings = $query->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $bookings = $query->paginate($perPage)->withQueryString();
 
         return view('admin.bookings', compact('bookings'));
     }
@@ -423,7 +433,12 @@ class AdminController extends Controller
             });
         }
 
-        $members = $query->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $members = $query->paginate($perPage)->withQueryString();
 
         return view('admin.members', compact('members'));
     }
@@ -549,7 +564,12 @@ class AdminController extends Controller
             $query->where('category', $request->category);
         }
 
-        $items = $query->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $items = $query->paginate($perPage)->withQueryString();
 
         return view('admin.gallery', compact('items'));
     }
@@ -671,7 +691,12 @@ class AdminController extends Controller
             });
         }
 
-        $events = $query->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $events = $query->paginate($perPage)->withQueryString();
 
         return view('admin.events', compact('events'));
     }
@@ -792,7 +817,12 @@ class AdminController extends Controller
     */
     public function messages(): View
     {
-        $messages = ContactMessage::orderBy('id', 'desc')->paginate(20);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $messages = ContactMessage::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
         ContactMessage::where('is_read', false)->update(['is_read' => true]);
 
         return view('admin.messages', compact('messages'));
@@ -877,7 +907,12 @@ class AdminController extends Controller
             'desktop' => ActivityLog::where('device_type', 'Desktop')->count(),
         ];
 
-        $logs = $query->paginate(25)->withQueryString();
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $logs = $query->paginate($perPage)->withQueryString();
 
         return view('admin.logs', compact('logs', 'stats'));
     }

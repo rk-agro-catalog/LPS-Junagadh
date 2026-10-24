@@ -13,6 +13,8 @@
         </div>
     </div>
 
+    @include('partials.datatable-toolbar', ['paginator' => $messages])
+
     <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>

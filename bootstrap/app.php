@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminInactivityTimeout;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
         $middleware->append(SecurityHeaders::class);
+        $middleware->alias([
+            'admin.timeout' => AdminInactivityTimeout::class,
+        ]);
         $middleware->redirectTo(
             guests: '/admin/login',
             users: '/admin',

@@ -105,7 +105,12 @@ class HomeController extends Controller
             });
         }
 
-        $donors = $donorsQuery->paginate(15);
+        $perPage = (int) $request->input('per_page', 10);
+        if (! in_array($perPage, [10, 25, 50, 100, 500])) {
+            $perPage = 10;
+        }
+
+        $donors = $donorsQuery->paginate($perPage)->withQueryString();
         $totalYards = (int) Bhumidan::where('status', 'verified')->sum('sq_yards');
         $totalDonation = (float) Bhumidan::where('status', 'verified')->sum('total_amount');
         $totalDonors = Bhumidan::where('status', 'verified')->count();

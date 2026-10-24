@@ -130,6 +130,8 @@
         </div>
     </div>
 
+    @include('partials.datatable-toolbar', ['paginator' => $logs])
+
     <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>

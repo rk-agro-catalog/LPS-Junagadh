@@ -38,6 +38,8 @@
         </div>
     </div>
 
+    @include('partials.datatable-toolbar', ['paginator' => $bookings])
+
     <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>

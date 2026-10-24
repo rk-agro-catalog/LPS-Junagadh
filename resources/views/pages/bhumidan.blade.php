@@ -241,6 +241,8 @@
             </form>
         </div>
 
+        @include('partials.datatable-toolbar', ['paginator' => $donors])
+
         <div class="table-responsive-wrapper">
             <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 620px; font-size: 0.9rem;">
                 <thead>

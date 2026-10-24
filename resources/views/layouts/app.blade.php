@@ -272,6 +272,33 @@
     <!-- Custom Scripts -->
     <script src="{{ asset('js/lps-app.js') }}?v={{ file_exists(public_path('js/lps-app.js')) ? filemtime(public_path('js/lps-app.js')) : '2.0' }}"></script>
     <script src="{{ asset('js/gujarati-transliterate.js') }}?v={{ file_exists(public_path('js/gujarati-transliterate.js')) ? filemtime(public_path('js/gujarati-transliterate.js')) : '2.0' }}"></script>
+    <script>
+    function updateTablePerPage(val) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('per_page', val);
+        url.searchParams.delete('page');
+        return url.toString();
+    }
+
+    document.addEventListener('submit', function(e) {
+        const form = e.target;
+        if (!form || form.tagName !== 'FORM') return;
+        let input = form.querySelector('input[name="_client_system"]');
+        if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_client_system';
+            form.appendChild(input);
+        }
+        input.value = JSON.stringify({
+            screen: (window.screen ? window.screen.width + 'x' + window.screen.height : ''),
+            viewport: window.innerWidth + 'x' + window.innerHeight,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+            language: navigator.language || '',
+            touch: ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'yes' : 'no'
+        });
+    }, true);
+    </script>
     @stack('scripts')
 </body>
 </html>

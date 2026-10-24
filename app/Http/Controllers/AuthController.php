@@ -99,4 +99,32 @@ class AuthController extends Controller
         return redirect()->route('admin.login')
             ->with('success', 'આપ સુરક્ષિત રીતે એડમિન પોર્ટલમાંથી લોગ આઉટ થઈ ગયા છો.');
     }
+
+    /**
+     * Handle automatic logout due to 30 minutes of inactivity.
+     */
+    public function autoLogout(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            ActivityLogger::log(
+                action: 'admin_auto_timeout_logout',
+                description: "એડમિન યુઝર '{$user->name}' ({$user->email}) ૩૦ મિનિટ સુધી નિષ્ક્રિય રહેવાને કારણે બ્રાઉઝરમાંથી આપોઆપ લૉગ આઉટ થયા.",
+                request: $request,
+                extraPayload: ['reason' => 'inactivity_timeout_30_minutes'],
+                userType: 'admin',
+                userName: $user->name,
+                userContact: $user->email
+            );
+        }
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login')
+            ->with('warning', '૩૦ મિનિટ સુધી કોઈ પ્રવૃત્તિ ન થવાથી સુરક્ષાના કારણોસર આપ આપોઆપ લૉગ આઉટ થઈ ગયા છો. કૃપા કરીને ફરી લૉગિન કરો.');
+    }
 }

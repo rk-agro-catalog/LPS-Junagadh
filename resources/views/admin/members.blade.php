@@ -31,6 +31,8 @@
         </div>
     </div>
 
+    @include('partials.datatable-toolbar', ['paginator' => $members])
+
     <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>
