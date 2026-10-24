@@ -113,30 +113,32 @@
             </p>
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success" style="margin-bottom: 1.25rem;">
-                <i class="ri-checkbox-circle-fill"></i>
-                <div style="font-size: 0.88rem;">{{ session('success') }}</div>
-            </div>
-        @endif
-
-        @if(session('warning'))
-            <div class="alert" style="background: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
-                <i class="ri-time-line" style="font-size: 1.2rem; flex-shrink: 0; color: #d97706;"></i>
-                <div style="font-size: 0.88rem;">{{ session('warning') }}</div>
-            </div>
-        @endif
-
-        @if($errors->any())
-            <div class="alert" style="background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
-                <i class="ri-error-warning-fill" style="font-size: 1.2rem; flex-shrink: 0; color: #dc2626;"></i>
-                <div style="font-size: 0.88rem;">
-                    @foreach($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
+        <noscript>
+            @if(session('success'))
+                <div class="alert alert-success" style="margin-bottom: 1.25rem;">
+                    <i class="ri-checkbox-circle-fill"></i>
+                    <div style="font-size: 0.88rem;">{{ session('success') }}</div>
                 </div>
-            </div>
-        @endif
+            @endif
+
+            @if(session('warning'))
+                <div class="alert" style="background: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
+                    <i class="ri-time-line" style="font-size: 1.2rem; flex-shrink: 0; color: #d97706;"></i>
+                    <div style="font-size: 0.88rem;">{{ session('warning') }}</div>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert" style="background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start;">
+                    <i class="ri-error-warning-fill" style="font-size: 1.2rem; flex-shrink: 0; color: #dc2626;"></i>
+                    <div style="font-size: 0.88rem;">
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </noscript>
 
         <form action="{{ route('admin.login.submit') }}" method="POST">
             @csrf
@@ -201,5 +203,6 @@
             });
         }
     </script>
+    @include('partials.toastr')
 </body>
 </html>

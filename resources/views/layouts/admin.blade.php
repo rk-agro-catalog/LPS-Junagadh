@@ -173,19 +173,21 @@
 
             <!-- Main Body -->
             <main class="admin-main">
-                @if(session('success'))
-                    <div class="alert alert-success" style="margin-bottom: 1.25rem;">
-                        <i class="ri-checkbox-circle-fill"></i>
-                        <div>{{ session('success') }}</div>
-                    </div>
-                @endif
+                <noscript>
+                    @if(session('success'))
+                        <div class="alert alert-success" style="margin-bottom: 1.25rem;">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <div>{{ session('success') }}</div>
+                        </div>
+                    @endif
 
-                @if(session('error'))
-                    <div class="alert alert-danger" style="margin-bottom: 1.25rem; background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 0.75rem 1rem; border-radius: var(--radius-md);">
-                        <i class="ri-error-warning-fill"></i>
-                        <div>{{ session('error') }}</div>
-                    </div>
-                @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger" style="margin-bottom: 1.25rem; background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 0.75rem 1rem; border-radius: var(--radius-md);">
+                            <i class="ri-error-warning-fill"></i>
+                            <div>{{ session('error') }}</div>
+                        </div>
+                    @endif
+                </noscript>
 
                 @yield('content')
             </main>
@@ -274,6 +276,7 @@
             resetInactivityTimer();
         })();
     </script>
+    @include('partials.toastr')
     @stack('scripts')
 </body>
 </html>

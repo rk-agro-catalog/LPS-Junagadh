@@ -151,22 +151,24 @@
         </div>
     </div>
 
-    <!-- Global Alert Notifications -->
-    <div class="container alert-container">
-        @if(session('success'))
-            <div class="alert alert-success">
-                <i class="ri-checkbox-circle-fill" style="font-size: 1.3rem;"></i>
-                <div>{{ session('success') }}</div>
-            </div>
-        @endif
+    <!-- Fallback Alert Notifications (For No-JS environments) -->
+    <noscript>
+        <div class="container alert-container">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <i class="ri-checkbox-circle-fill" style="font-size: 1.3rem;"></i>
+                    <div>{{ session('success') }}</div>
+                </div>
+            @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                <i class="ri-error-warning-fill" style="font-size: 1.3rem;"></i>
-                <div>{{ session('error') }}</div>
-            </div>
-        @endif
-    </div>
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    <i class="ri-error-warning-fill" style="font-size: 1.3rem;"></i>
+                    <div>{{ session('error') }}</div>
+                </div>
+            @endif
+        </div>
+    </noscript>
 
     <!-- Main Content -->
     <main class="page-content">
@@ -281,6 +283,7 @@
         return url.toString();
     }
     </script>
+    @include('partials.toastr')
     @stack('scripts')
 </body>
 </html>
