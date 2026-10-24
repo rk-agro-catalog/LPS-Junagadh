@@ -19,6 +19,14 @@ services:
         fromDatabase:
           name: lps-db
           property: connectionString
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: database
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: QUEUE_CONNECTION
+        value: sync
       - key: RUN_SEEDER
         value: "true"
 

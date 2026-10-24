@@ -16,7 +16,7 @@ if [ "${DB_CONNECTION}" = "sqlite" ] || [ -z "${DB_CONNECTION}" ]; then
 fi
 
 # Ensure storage directories exist and are writable
-mkdir -p /var/www/html/storage/framework/{sessions,views,cache} /var/www/html/storage/logs
+mkdir -p /var/www/html/storage/framework/{sessions,views,cache/data,cache/locks} /var/www/html/storage/logs
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -25,6 +25,12 @@ if [ -z "$APP_KEY" ]; then
     echo "Warning: APP_KEY is not set. Generating temporary key..."
     php artisan key:generate --force
 fi
+
+# Clear old cached files
+php artisan config:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
+php artisan cache:clear || true
 
 # Run database migrations
 echo "Running database migrations..."

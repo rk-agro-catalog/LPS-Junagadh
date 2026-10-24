@@ -47,7 +47,7 @@ Route::post('/contact', [HomeController::class, 'storeContact'])->middleware('th
 // Guest Authentication Routes (Brute-force protected: max 5 attempts/minute)
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.submit');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1')->name('login.submit');
 });
 
 // Global login fallback for auth middleware

@@ -20,8 +20,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $totalYards = Bhumidan::where('status', 'verified')->sum('sq_yards');
-        $totalDonation = Bhumidan::where('status', 'verified')->sum('total_amount');
+        $totalYards = (int) Bhumidan::where('status', 'verified')->sum('sq_yards');
+        $totalDonation = (float) Bhumidan::where('status', 'verified')->sum('total_amount');
         $totalDonorsCount = Bhumidan::where('status', 'verified')->count();
 
         $trustees = Trustee::where('is_active', true)
@@ -104,8 +104,8 @@ class HomeController extends Controller
         }
 
         $donors = $donorsQuery->paginate(15);
-        $totalYards = Bhumidan::where('status', 'verified')->sum('sq_yards');
-        $totalDonation = Bhumidan::where('status', 'verified')->sum('total_amount');
+        $totalYards = (int) Bhumidan::where('status', 'verified')->sum('sq_yards');
+        $totalDonation = (float) Bhumidan::where('status', 'verified')->sum('total_amount');
         $totalDonors = Bhumidan::where('status', 'verified')->count();
 
         return view('pages.bhumidan', compact('donors', 'totalYards', 'totalDonation', 'totalDonors', 'search'));

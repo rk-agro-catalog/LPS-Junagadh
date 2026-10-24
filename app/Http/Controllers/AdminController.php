@@ -22,8 +22,8 @@ class AdminController extends Controller
     public function dashboard(): View
     {
         $stats = [
-            'total_yards' => Bhumidan::sum('sq_yards'),
-            'total_donation' => Bhumidan::sum('total_amount'),
+            'total_yards' => (int) Bhumidan::sum('sq_yards'),
+            'total_donation' => (float) Bhumidan::sum('total_amount'),
             'total_donors' => Bhumidan::count(),
             'new_inquiries' => BookingInquiry::where('status', 'new')->count(),
             'total_inquiries' => BookingInquiry::count(),
