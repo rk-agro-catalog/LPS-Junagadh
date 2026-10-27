@@ -12,7 +12,9 @@ use App\Models\Member;
 use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -815,7 +817,7 @@ class AdminController extends Controller
     | 6. Contact Messages
     |--------------------------------------------------------------------------
     */
-    public function messages(): View
+    public function messages(Request $request): View
     {
         $perPage = (int) $request->input('per_page', 10);
         if (! in_array($perPage, [10, 25, 50, 100, 500])) {
@@ -872,6 +874,20 @@ class AdminController extends Controller
     */
     public function logs(Request $request): View
     {
+        if (! Schema::hasTable('activity_logs')) {
+            $stats = [
+                'total' => 0,
+                'today' => 0,
+                'public' => 0,
+                'admin' => 0,
+                'mobile' => 0,
+                'desktop' => 0,
+            ];
+            $logs = new LengthAwarePaginator([], 0, 10);
+
+            return view('admin.logs', compact('logs', 'stats'));
+        }
+
         $query = ActivityLog::orderBy('id', 'desc');
 
         if ($request->filled('user_type')) {
@@ -898,14 +914,26 @@ class AdminController extends Controller
             });
         }
 
-        $stats = [
-            'total' => ActivityLog::count(),
-            'today' => ActivityLog::whereDate('created_at', now()->toDateString())->count(),
-            'public' => ActivityLog::where('user_type', 'public')->count(),
-            'admin' => ActivityLog::where('user_type', 'admin')->count(),
-            'mobile' => ActivityLog::where('device_type', 'Mobile')->count(),
-            'desktop' => ActivityLog::where('device_type', 'Desktop')->count(),
-        ];
+        try {
+            $stats = [
+                'total' => ActivityLog::count(),
+                'today' => ActivityLog::whereDate('created_at', now()->toDateString())->count(),
+                'public' => ActivityLog::where('user_type', 'public')->count(),
+                'admin' => ActivityLog::where('user_type', 'admin')->count(),
+                'mobile' => ActivityLog::where('device_type', 'Mobile')->count(),
+                'desktop' => ActivityLog::where('device_type', 'Desktop')->count(),
+            ];
+        } catch (\Throwable $e) {
+            report($e);
+            $stats = [
+                'total' => 0,
+                'today' => 0,
+                'public' => 0,
+                'admin' => 0,
+                'mobile' => 0,
+                'desktop' => 0,
+            ];
+        }
 
         $perPage = (int) $request->input('per_page', 10);
         if (! in_array($perPage, [10, 25, 50, 100, 500])) {
@@ -919,21 +947,28 @@ class AdminController extends Controller
 
     public function deleteLog($id): RedirectResponse
     {
-        $log = ActivityLog::findOrFail($id);
-        $log->delete();
+        if (Schema::hasTable('activity_logs')) {
+            $log = ActivityLog::find($id);
+            if ($log) {
+                $log->delete();
+            }
+        }
 
         return redirect()->back()->with('success', 'લૉગ રેકોર્ડ સફળતાપૂર્વક દૂર કરવામાં આવ્યો છે.');
     }
 
     public function clearOldLogs(): RedirectResponse
     {
-        $deleted = ActivityLog::where('created_at', '<=', now()->subDays(90))->delete();
+        $deleted = 0;
+        if (Schema::hasTable('activity_logs')) {
+            $deleted = ActivityLog::where('created_at', '<=', now()->subDays(90))->delete();
 
-        ActivityLogger::logAdmin(
-            action: 'admin_logs_pruned',
-            description: "૯૦ દિવસથી જૂના તમામ ({$deleted}) લૉગ રેકોર્ડ્સ સાફ કરવામાં આવ્યા.",
-            extraPayload: ['deleted_count' => $deleted, 'retention_days' => 90]
-        );
+            ActivityLogger::logAdmin(
+                action: 'admin_logs_pruned',
+                description: "૯૦ દિવસથી જૂના તમામ ({$deleted}) લૉગ રેકોર્ડ્સ સાફ કરવામાં આવ્યા.",
+                extraPayload: ['deleted_count' => $deleted, 'retention_days' => 90]
+            );
+        }
 
         return redirect()->back()->with('success', "૯૦ દિવસથી જૂના તમામ ({$deleted}) લૉગ રેકોર્ડ્સ સફળતાપૂર્વક સાફ કરવામાં આવ્યા છે.");
     }

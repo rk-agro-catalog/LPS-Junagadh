@@ -136,63 +136,74 @@ class HomeController extends Controller
             'notes' => 'nullable|string|max:1000',
         ]);
 
-        $receiptNumber = 'LPS-JND-'.date('Y').'-'.strtoupper(Str::random(5));
-        $totalAmount = $validated['sq_yards'] * 2500;
+        try {
+            $receiptNumber = 'LPS-JND-'.date('Y').'-'.strtoupper(Str::random(5));
+            $totalAmount = $validated['sq_yards'] * 2500;
 
-        // Process optional payment screenshot upload
-        $screenshotPath = null;
-        if ($request->hasFile('payment_screenshot')) {
-            $file = $request->file('payment_screenshot');
-            $fileName = 'bhumidan_'.time().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
-            $destination = public_path('uploads/payment_screenshots');
-            if (! file_exists($destination)) {
-                mkdir($destination, 0755, true);
+            // Process optional payment screenshot upload
+            $screenshotPath = null;
+            if ($request->hasFile('payment_screenshot')) {
+                $file = $request->file('payment_screenshot');
+                $fileName = 'bhumidan_'.time().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
+                $destination = public_path('uploads/payment_screenshots');
+                if (! file_exists($destination)) {
+                    mkdir($destination, 0755, true);
+                }
+                $file->move($destination, $fileName);
+                $screenshotPath = 'uploads/payment_screenshots/'.$fileName;
             }
-            $file->move($destination, $fileName);
-            $screenshotPath = 'uploads/payment_screenshots/'.$fileName;
+
+            $donation = Bhumidan::create([
+                'receipt_number' => $receiptNumber,
+                'donor_name' => $validated['donor_name'],
+                'donor_name_gujarati' => $validated['donor_name'],
+                'phone' => $validated['phone'],
+                'email' => $validated['email'] ?? null,
+                'village' => $validated['village'] ?? null,
+                'city' => $validated['city'],
+                'sq_yards' => $validated['sq_yards'],
+                'rate_per_yard' => 2500,
+                'total_amount' => $totalAmount,
+                'payment_method' => $validated['payment_method'],
+                'transaction_id' => $validated['transaction_id'] ?? null,
+                'payment_screenshot' => $screenshotPath,
+                'status' => 'verified', // Pledged or verified
+                'notes' => $validated['notes'] ?? null,
+            ]);
+
+            // Record Activity Log
+            try {
+                ActivityLogger::log(
+                    action: 'bhumidan_submitted',
+                    description: "શ્રી {$donation->donor_name} દ્વારા {$donation->sq_yards} વાર (₹ ".number_format((float) $donation->total_amount).') નું ઓનલાઇન ભૂમિદાન સંકલ્પ ફોર્મ સબમિટ કરવામાં આવ્યું.',
+                    request: $request,
+                    extraPayload: [
+                        'receipt_number' => $donation->receipt_number,
+                        'donor_name' => $donation->donor_name,
+                        'phone' => $donation->phone,
+                        'city' => $donation->city,
+                        'sq_yards' => $donation->sq_yards,
+                        'total_amount' => (float) $donation->total_amount,
+                        'payment_method' => $donation->payment_method,
+                        'transaction_id' => $donation->transaction_id,
+                        'has_screenshot' => ! empty($screenshotPath),
+                    ],
+                    userType: 'public',
+                    userName: $donation->donor_name,
+                    userContact: $donation->phone
+                );
+            } catch (\Throwable $logEx) {
+                report($logEx);
+            }
+
+            return redirect()->route('bhumidan')
+                ->with('success', 'તમારા ભૂમિદાન સંકલ્પની નોંધણી સફળતાપૂર્વક થઈ ગઈ છે (સંકલ્પ ક્રમાંક: '.$donation->receipt_number.'). ટ્રસ્ટ કાર્યાલય દ્વારા ચકાસણી કરીને સત્તાવાર રસીદ આપને આપવામાં આવશે. આપનો હૃદયપૂર્વક આભાર!');
+        } catch (\Throwable $e) {
+            report($e);
+
+            return redirect()->route('bhumidan')
+                ->with('error', 'નોંધણી પ્રક્રિયામાં ક્ષતિ આવી છે. કૃપા કરીને ફરી પ્રયાસ કરો અથવા ટ્રસ્ટ કાર્યાલયનો સંપર્ક કરો.');
         }
-
-        $donation = Bhumidan::create([
-            'receipt_number' => $receiptNumber,
-            'donor_name' => $validated['donor_name'],
-            'donor_name_gujarati' => $validated['donor_name'],
-            'phone' => $validated['phone'],
-            'email' => $validated['email'] ?? null,
-            'village' => $validated['village'] ?? null,
-            'city' => $validated['city'],
-            'sq_yards' => $validated['sq_yards'],
-            'rate_per_yard' => 2500,
-            'total_amount' => $totalAmount,
-            'payment_method' => $validated['payment_method'],
-            'transaction_id' => $validated['transaction_id'] ?? null,
-            'payment_screenshot' => $screenshotPath,
-            'status' => 'verified', // Pledged or verified
-            'notes' => $validated['notes'] ?? null,
-        ]);
-
-        // Record Activity Log
-        ActivityLogger::log(
-            action: 'bhumidan_submitted',
-            description: "શ્રી {$donation->donor_name} દ્વારા {$donation->sq_yards} વાર (₹ ".number_format($donation->total_amount).') નું ઓનલાઇન ભૂમિદાન સંકલ્પ ફોર્મ સબમિટ કરવામાં આવ્યું.',
-            request: $request,
-            extraPayload: [
-                'receipt_number' => $donation->receipt_number,
-                'donor_name' => $donation->donor_name,
-                'phone' => $donation->phone,
-                'city' => $donation->city,
-                'sq_yards' => $donation->sq_yards,
-                'total_amount' => (float) $donation->total_amount,
-                'payment_method' => $donation->payment_method,
-                'transaction_id' => $donation->transaction_id,
-                'has_screenshot' => ! empty($screenshotPath),
-            ],
-            userType: 'public',
-            userName: $donation->donor_name,
-            userContact: $donation->phone
-        );
-
-        return redirect()->route('bhumidan')
-            ->with('success', 'તમારા ભૂમિદાન સંકલ્પની નોંધણી સફળતાપૂર્વક થઈ ગઈ છે (સંકલ્પ ક્રમાંક: '.$donation->receipt_number.'). ટ્રસ્ટ કાર્યાલય દ્વારા ચકાસણી કરીને સત્તાવાર રસીદ આપને આપવામાં આવશે. આપનો હૃદયપૂર્વક આભાર!');
     }
 
     /**

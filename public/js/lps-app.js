@@ -111,8 +111,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update dynamic UPI QR Code image
     const dynamicQrImg = document.getElementById('dynamicUpiQrImg');
     if (dynamicQrImg) {
+      delete dynamicQrImg.dataset.fallback;
       const qrData = encodeURIComponent(`upi://pay?pa=9093390934@sbi&pn=Shree Samast Leuva Patel Samaj Trust&am=${total}&cu=INR&tn=LPS Junagadh Bhumidan`);
       dynamicQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrData}`;
+      dynamicQrImg.onerror = function() {
+        if (!this.dataset.fallback) {
+          this.dataset.fallback = '1';
+          this.src = `https://quickchart.io/qr?size=150&text=${qrData}`;
+        }
+      };
     }
 
     // Update QR amount text badge

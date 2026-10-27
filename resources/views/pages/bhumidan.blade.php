@@ -192,7 +192,11 @@
                 </h3>
 
                 <div style="margin: 1rem auto; width: 160px; height: 160px; background: #fff; border: 1.5px solid var(--color-border); border-radius: var(--radius-md); padding: 8px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm);">
-                    <img id="dynamicUpiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3D9093390934%40sbi%26pn%3DShree%2520Samast%2520Leuva%2520Patel%2520Samaj%2520Trust%26am%3D2500%26cu%3DINR%26tn%3DLPS%20Junagadh%20Bhumidan" alt="UPI QR Code" style="width: 144px; height: 144px;">
+                    <img id="dynamicUpiQrImg" 
+                         src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3D9093390934%40sbi%26pn%3DShree%2520Samast%2520Leuva%2520Patel%2520Samaj%2520Trust%26am%3D2500%26cu%3DINR%26tn%3DLPS%20Junagadh%20Bhumidan" 
+                         alt="UPI QR Code" 
+                         style="width: 144px; height: 144px; object-fit: contain;"
+                         onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://quickchart.io/qr?size=150&text=' + encodeURIComponent('upi://pay?pa=9093390934@sbi&pn=Shree Samast Leuva Patel Samaj Trust&am=2500&cu=INR&tn=LPS Junagadh Bhumidan');}">
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">

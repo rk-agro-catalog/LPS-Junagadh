@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('bhumidans', function (Blueprint $table) {
-            $table->string('payment_screenshot')->nullable()->after('transaction_id');
-        });
+        if (Schema::hasTable('bhumidans') && ! Schema::hasColumn('bhumidans', 'payment_screenshot')) {
+            Schema::table('bhumidans', function (Blueprint $table) {
+                $table->string('payment_screenshot')->nullable();
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('bhumidans', function (Blueprint $table) {
-            $table->dropColumn('payment_screenshot');
-        });
+        if (Schema::hasTable('bhumidans') && Schema::hasColumn('bhumidans', 'payment_screenshot')) {
+            Schema::table('bhumidans', function (Blueprint $table) {
+                $table->dropColumn('payment_screenshot');
+            });
+        }
     }
 };
