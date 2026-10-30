@@ -277,4 +277,79 @@
 </div>
 @endif
 
+<!-- Recent Activity & Audit Logs on Dashboard -->
+@if(isset($recentLogs) && $recentLogs->count() > 0)
+<div class="admin-card" style="margin-top: 1.75rem;">
+    <div class="admin-card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <h3 class="admin-card-title">તાજેતરના સિસ્ટમ એક્ટિવિટી & સબમિશન લૉગ્સ</h3>
+                <span class="badge" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.72rem; padding: 0.15rem 0.5rem; font-weight: 700;">
+                    Live Feed
+                </span>
+            </div>
+            <div class="admin-card-desc">એડમિન લૉગિન, ઓનલાઇન ફોર્મ સબમિશન અને ડેટા સુધારાની તાજી પ્રવૃત્તિઓ</div>
+        </div>
+        <a href="{{ route('admin.logs') }}" class="admin-header-btn admin-header-btn-site" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;">
+            તમામ લૉગ્સ જુઓ (View All) →
+        </a>
+    </div>
+
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th style="white-space: nowrap;">સમય</th>
+                    <th>યુઝર / એક્ટર</th>
+                    <th>પ્રવૃત્તિ & વર્ણન (Action)</th>
+                    <th>ડિવાઇસ & ઓપરેટિંગ સિસ્ટમ</th>
+                    <th>ચોક્કસ લોકેશન</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($recentLogs as $log)
+                    <tr>
+                        <td style="font-family: var(--font-latin); white-space: nowrap; font-size: 0.82rem; color: #475569;">
+                            <div style="font-weight: 700; color: #0f172a;">{{ $log->created_at->format('d M, Y') }}</div>
+                            <div style="color: #64748b; font-size: 0.76rem;">{{ $log->created_at->format('h:i A') }} ({{ $log->created_at->diffForHumans() }})</div>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <div style="display: flex; align-items: center; gap: 0.35rem;">
+                                @if($log->user_type === 'admin')
+                                    <span class="badge" style="background: #fdf2f8; color: #9d174d; font-size: 0.68rem; padding: 0.12rem 0.4rem; border: 1px solid #fbcfe8;">
+                                        <i class="ri-shield-star-line"></i> એડમિન
+                                    </span>
+                                @else
+                                    <span class="badge" style="background: #f0fdf4; color: #166534; font-size: 0.68rem; padding: 0.12rem 0.4rem; border: 1px solid #bbf7d0;">
+                                        <i class="ri-user-3-line"></i> પબ્લિક
+                                    </span>
+                                @endif
+                                <strong style="color: #0f172a; font-size: 0.85rem;">{{ $log->user_name ?: 'અજ્ઞાત મુલાકાતી' }}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-bottom: 0.2rem;">
+                                <span class="badge badge-gold" style="font-size: 0.7rem; padding: 0.12rem 0.45rem; font-family: var(--font-latin);">
+                                    {{ $log->action }}
+                                </span>
+                            </div>
+                            <div style="font-size: 0.82rem; color: #1e293b; font-weight: 500;">
+                                {{ $log->description }}
+                            </div>
+                        </td>
+                        <td style="white-space: nowrap; font-size: 0.8rem; font-family: var(--font-latin); color: #334155;">
+                            <div><strong>{{ $log->device_name ?: $log->os }}</strong></div>
+                            <div style="font-size: 0.74rem; color: #64748b;">{{ $log->os }} • {{ $log->browser }}</div>
+                        </td>
+                        <td style="font-size: 0.8rem; color: #475569;">
+                            {{ $log->location ?: 'Localhost' }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
 @endsection

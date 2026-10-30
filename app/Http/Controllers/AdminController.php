@@ -40,8 +40,11 @@ class AdminController extends Controller
         $recentDonations = Bhumidan::orderBy('id', 'desc')->take(5)->get();
         $recentInquiries = BookingInquiry::orderBy('id', 'desc')->take(5)->get();
         $upcomingEvents = Event::where('event_date', '>=', now()->toDateString())->orderBy('event_date', 'asc')->take(3)->get();
+        $recentLogs = Schema::hasTable('activity_logs')
+            ? ActivityLog::orderBy('id', 'desc')->take(6)->get()
+            : collect();
 
-        return view('admin.dashboard', compact('stats', 'recentDonations', 'recentInquiries', 'upcomingEvents'));
+        return view('admin.dashboard', compact('stats', 'recentDonations', 'recentInquiries', 'upcomingEvents', 'recentLogs'));
     }
 
     /*
