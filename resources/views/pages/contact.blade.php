@@ -78,32 +78,32 @@
                 આપનું કોઈ પણ સૂચન કે પ્રશ્ન હોય તો નીચેનું ફોર્મ ભરી મોકલી શકો છો.
             </p>
 
-            <form action="{{ route('contact.store') }}" method="POST">
+            <form action="{{ route('contact.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">આપનું નામ *</label>
-                        <input type="text" name="name" class="form-control" placeholder="પૂરું નામ લખો" required>
+                        <input type="text" name="name" class="form-control" placeholder="પૂરું નામ લખો" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મોબાઈલ નંબર *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" required>
+                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" autocomplete="off" required>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">ઈમેઈલ (વૈકલ્પિક)</label>
-                        <input type="email" name="email" class="form-control" placeholder="email@example.com">
+                        <input type="email" name="email" class="form-control" placeholder="email@example.com" autocomplete="off">
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">વિષય *</label>
-                        <input type="text" name="subject" class="form-control" placeholder="પૂછપરછનો વિષય" required>
+                        <input type="text" name="subject" class="form-control" placeholder="પૂછપરછનો વિષય" autocomplete="off" required>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">વિગતવાર સંદેશો *</label>
-                        <textarea name="message" rows="4" class="form-control" placeholder="તમારો સંદેશો અહીં લખો..." required></textarea>
+                        <textarea name="message" rows="4" class="form-control" placeholder="તમારો સંદેશો અહીં લખો..." autocomplete="off" required></textarea>
                     </div>
 
                     <div class="form-group full-width">

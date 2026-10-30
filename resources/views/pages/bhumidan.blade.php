@@ -82,32 +82,32 @@
                 </div>
             </div>
 
-            <form action="{{ route('bhumidan.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('bhumidan.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">દાતાશ્રીનું પૂરું નામ *</label>
-                        <input type="text" name="donor_name" class="form-control" placeholder="શ્રી / શ્રીમતી ..." required>
+                        <input type="text" name="donor_name" class="form-control" placeholder="શ્રી / શ્રીમતી ..." required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મોબાઈલ નંબર *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" required>
+                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મૂળ ગામ</label>
-                        <input type="text" name="village" class="form-control" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર...">
+                        <input type="text" name="village" class="form-control" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર..." autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">હાલનું શહેર *</label>
-                        <input type="text" name="city" class="form-control" value="જૂનાગઢ" required>
+                        <input type="text" name="city" class="form-control" value="જૂનાગઢ" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">ચોરસ વાર સંખ્યા *</label>
-                        <input type="number" id="calcYards" name="sq_yards" class="form-control" value="1" min="1" max="1000" required>
+                        <input type="number" id="calcYards" name="sq_yards" class="form-control" value="1" min="1" max="1000" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
@@ -122,7 +122,7 @@
 
                     <div class="form-group full-width">
                         <label class="form-label">ટ્રાન્ઝેક્શન / રેફરન્સ નંબર (જો ઓનલાઇન કરેલ હોય તો)</label>
-                        <input type="text" name="transaction_id" class="form-control" placeholder="UPI Ref ID / UTR નંબર...">
+                        <input type="text" name="transaction_id" class="form-control" placeholder="UPI Ref ID / UTR નંબર..." autocomplete="off">
                     </div>
 
                     <div class="form-group full-width">
@@ -232,8 +232,8 @@
             </div>
 
             <!-- Search Form -->
-            <form action="{{ route('bhumidan') }}" method="GET" style="display: flex; gap: 0.4rem; width: 100%; max-width: 320px;">
-                <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="નામ, ગામ કે રસીદ નં..." class="form-control" style="font-size: 0.85rem; padding: 0.5rem 0.75rem;">
+            <form action="{{ route('bhumidan') }}" method="GET" style="display: flex; gap: 0.4rem; width: 100%; max-width: 320px;" autocomplete="off">
+                <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="નામ, ગામ કે રસીદ નં..." class="form-control" style="font-size: 0.85rem; padding: 0.5rem 0.75rem;" autocomplete="off">
                 <button type="submit" class="btn btn-primary" style="padding: 0.5rem 0.85rem;">
                     <i class="ri-search-line"></i>
                 </button>

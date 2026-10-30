@@ -29,8 +29,8 @@
                 </a>
             </div>
 
-            <form action="{{ route('admin.bookings') }}" method="GET" class="admin-search-form">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="અરજદાર, ફોન..." class="form-control" style="width: 170px; font-size: 0.82rem; padding: 0.42rem 0.75rem;">
+            <form action="{{ route('admin.bookings') }}" method="GET" class="admin-search-form" autocomplete="off">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="અરજદાર, ફોન..." autocomplete="off" class="form-control" style="width: 170px; font-size: 0.82rem; padding: 0.42rem 0.75rem;">
                 <button type="submit" class="admin-header-btn admin-header-btn-site" style="padding: 0.42rem 0.75rem;" title="Search">
                     <i class="ri-search-line"></i>
                 </button>

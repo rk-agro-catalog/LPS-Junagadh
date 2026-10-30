@@ -27,18 +27,18 @@
     @endif
 
     <div class="admin-card">
-        <form action="{{ $mode === 'create' ? route('admin.gallery.store') : route('admin.gallery.update', $item->id) }}" method="POST">
+        <form action="{{ $mode === 'create' ? route('admin.gallery.store') : route('admin.gallery.update', $item->id) }}" method="POST" autocomplete="off">
             @csrf
 
             <div class="form-grid">
                 <div class="form-group full-width">
                     <label class="form-label">શીર્ષક (Title) *</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title', $item->title) }}" placeholder="દા.ત. સંકુલ ભૂમિ પૂજન મહોત્સવ તસવીર..." required>
+                    <input type="text" name="title" class="form-control" value="{{ old('title', $item->title) }}" placeholder="દા.ત. સંકુલ ભૂમિ પૂજન મહોત્સવ તસવીર..." autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">કેટેગરી *</label>
-                    <select name="category" class="form-control" required>
+                    <select name="category" class="form-control" autocomplete="off" required>
                         <option value="events" {{ old('category', $item->category) == 'events' ? 'selected' : '' }}>સમાજ કાર્યક્રમો (Events)</option>
                         <option value="bhumipujan" {{ old('category', $item->category) == 'bhumipujan' ? 'selected' : '' }}>ભૂમિ પૂજન (Bhoomi Pujan)</option>
                         <option value="construction" {{ old('category', $item->category) == 'construction' ? 'selected' : '' }}>સંકુલ નિર્માણ કાર્ય (Construction)</option>
@@ -49,7 +49,7 @@
 
                 <div class="form-group">
                     <label class="form-label">મીડિયા પ્રકાર (Media Type) *</label>
-                    <select name="media_type" class="form-control" required>
+                    <select name="media_type" class="form-control" autocomplete="off" required>
                         <option value="image" {{ old('media_type', $item->media_type) == 'image' ? 'selected' : '' }}>ફોટો (Image)</option>
                         <option value="video" {{ old('media_type', $item->media_type) == 'video' ? 'selected' : '' }}>વિડીયો (Video File / URL)</option>
                         <option value="youtube" {{ old('media_type', $item->media_type) == 'youtube' ? 'selected' : '' }}>YouTube વિડીયો</option>
@@ -59,7 +59,7 @@
 
                 <div class="form-group full-width">
                     <label class="form-label">મીડિયા URL (Image / Video URL) *</label>
-                    <input type="url" name="media_url" class="form-control" value="{{ old('media_url', $item->media_url) }}" placeholder="https://example.com/image.jpg અથવા YouTube લિંક" required>
+                    <input type="url" name="media_url" class="form-control" value="{{ old('media_url', $item->media_url) }}" placeholder="https://example.com/image.jpg અથવા YouTube લિંક" autocomplete="off" required>
                     <div style="font-size: 0.76rem; color: #64748b; margin-top: 0.25rem;">
                         ઇમેજ લિંક, YouTube લિંક અથવા Instagram Reel લિંક પેસ્ટ કરો.
                     </div>
@@ -67,12 +67,12 @@
 
                 <div class="form-group full-width">
                     <label class="form-label">થમ્બનેઈલ URL (વૈકલ્પિક)</label>
-                    <input type="url" name="thumbnail_url" class="form-control" value="{{ old('thumbnail_url', $item->thumbnail_url) }}" placeholder="https://example.com/thumb.jpg">
+                    <input type="url" name="thumbnail_url" class="form-control" value="{{ old('thumbnail_url', $item->thumbnail_url) }}" placeholder="https://example.com/thumb.jpg" autocomplete="off">
                 </div>
 
                 <div class="form-group full-width">
                     <label class="form-label">કેપ્શન / વર્ણન</label>
-                    <textarea name="caption" rows="2" class="form-control" placeholder="તસવીર અથવા વિડીયો વિશે ટૂંકી વિગત...">{{ old('caption', $item->caption) }}</textarea>
+                    <textarea name="caption" rows="2" class="form-control" placeholder="તસવીર અથવા વિડીયો વિશે ટૂંકી વિગત..." autocomplete="off">{{ old('caption', $item->caption) }}</textarea>
                 </div>
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">

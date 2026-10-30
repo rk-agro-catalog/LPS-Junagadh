@@ -27,28 +27,28 @@
     @endif
 
     <div class="admin-card">
-        <form action="{{ $mode === 'create' ? route('admin.members.store') : route('admin.members.updateRecord', $member->id) }}" method="POST">
+        <form action="{{ $mode === 'create' ? route('admin.members.store') : route('admin.members.updateRecord', $member->id) }}" method="POST" autocomplete="off">
             @csrf
 
             <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label">પૂરું નામ *</label>
-                    <input type="text" name="full_name" class="form-control" value="{{ old('full_name', $member->full_name) }}" placeholder="દા.ત. રમેશભાઈ હરિભાઈ" required>
+                    <input type="text" name="full_name" class="form-control" value="{{ old('full_name', $member->full_name) }}" placeholder="દા.ત. રમેશભાઈ હરિભાઈ" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">પિતા / પતિનું નામ</label>
-                    <input type="text" name="father_or_husband_name" class="form-control" value="{{ old('father_or_husband_name', $member->father_or_husband_name) }}" placeholder="દા.ત. હરિભાઈ">
+                    <input type="text" name="father_or_husband_name" class="form-control" value="{{ old('father_or_husband_name', $member->father_or_husband_name) }}" placeholder="દા.ત. હરિભાઈ" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">અટક *</label>
-                    <input type="text" name="surname" class="form-control" value="{{ old('surname', $member->surname ?? 'પટેલ') }}" required>
+                    <input type="text" name="surname" class="form-control" value="{{ old('surname', $member->surname ?? 'પટેલ') }}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">જાતિ (Gender) *</label>
-                    <select name="gender" class="form-control" required>
+                    <select name="gender" class="form-control" autocomplete="off" required>
                         <option value="male" {{ old('gender', $member->gender) == 'male' ? 'selected' : '' }}>પુરુષ (Male)</option>
                         <option value="female" {{ old('gender', $member->gender) == 'female' ? 'selected' : '' }}>મહિલા (Female)</option>
                     </select>
@@ -56,52 +56,52 @@
 
                 <div class="form-group">
                     <label class="form-label">બ્લડ ગ્રૂપ (Blood Group)</label>
-                    <input type="text" name="blood_group" class="form-control" value="{{ old('blood_group', $member->blood_group) }}" placeholder="દા.ત. B+, O+, A+...">
+                    <input type="text" name="blood_group" class="form-control" value="{{ old('blood_group', $member->blood_group) }}" placeholder="દા.ત. B+, O+, A+..." autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">મૂળ વતન / ગામ</label>
-                    <input type="text" name="native_village" class="form-control" value="{{ old('native_village', $member->native_village) }}" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર...">
+                    <input type="text" name="native_village" class="form-control" value="{{ old('native_village', $member->native_village) }}" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર..." autocomplete="off">
                 </div>
 
                 <div class="form-group full-width">
                     <label class="form-label">હાલનું સરનામું *</label>
-                    <input type="text" name="current_address" class="form-control" value="{{ old('current_address', $member->current_address) }}" placeholder="સોસાયટી, શેરી, વિસ્તાર..." required>
+                    <input type="text" name="current_address" class="form-control" value="{{ old('current_address', $member->current_address) }}" placeholder="સોસાયટી, શેરી, વિસ્તાર..." autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">હાલનું શહેર *</label>
-                    <input type="text" name="city" class="form-control" value="{{ old('city', $member->city ?? 'જૂનાગઢ') }}" required>
+                    <input type="text" name="city" class="form-control" value="{{ old('city', $member->city ?? 'જૂનાગઢ') }}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">પીનકોડ</label>
-                    <input type="text" name="pincode" class="form-control" value="{{ old('pincode', $member->pincode ?? '362001') }}">
+                    <input type="text" name="pincode" class="form-control" value="{{ old('pincode', $member->pincode ?? '362001') }}" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">મોબાઈલ નંબર *</label>
-                    <input type="tel" name="phone" class="form-control" value="{{ old('phone', $member->phone) }}" placeholder="૧૦ અંકનો નંબર" required>
+                    <input type="tel" name="phone" class="form-control" value="{{ old('phone', $member->phone) }}" placeholder="૧૦ અંકનો નંબર" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">વોટ્સએપ નંબર</label>
-                    <input type="tel" name="whatsapp" class="form-control" value="{{ old('whatsapp', $member->whatsapp) }}" placeholder="વોટ્સએપ નંબર">
+                    <input type="tel" name="whatsapp" class="form-control" value="{{ old('whatsapp', $member->whatsapp) }}" placeholder="વોટ્સએપ નંબર" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">વ્યવસાય / ધંધો</label>
-                    <input type="text" name="occupation" class="form-control" value="{{ old('occupation', $member->occupation) }}" placeholder="દા.ત. ખેતી, વેપાર, નોકરી...">
+                    <input type="text" name="occupation" class="form-control" value="{{ old('occupation', $member->occupation) }}" placeholder="દા.ત. ખેતી, વેપાર, નોકરી..." autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">પરિવારના સભ્યોની સંખ્યા *</label>
-                    <input type="number" name="family_members_count" class="form-control" value="{{ old('family_members_count', $member->family_members_count ?? 4) }}" min="1" required>
+                    <input type="number" name="family_members_count" class="form-control" value="{{ old('family_members_count', $member->family_members_count ?? 4) }}" min="1" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">સભ્યપદ સ્ટેટસ *</label>
-                    <select name="status" class="form-control" required>
+                    <select name="status" class="form-control" autocomplete="off" required>
                         <option value="approved" {{ old('status', $member->status) == 'approved' ? 'selected' : '' }}>મંજૂર (Approved)</option>
                         <option value="pending" {{ old('status', $member->status) == 'pending' ? 'selected' : '' }}>પેન્ડિંગ (Pending Review)</option>
                         <option value="rejected" {{ old('status', $member->status) == 'rejected' ? 'selected' : '' }}>અસ્વીકૃત (Rejected)</option>

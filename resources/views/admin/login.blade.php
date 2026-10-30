@@ -140,14 +140,14 @@
             @endif
         </noscript>
 
-        <form action="{{ route('admin.login.submit') }}" method="POST">
+        <form action="{{ route('admin.login.submit') }}" method="POST" autocomplete="off">
             @csrf
 
             <div class="form-group" style="margin-bottom: 1.25rem;">
                 <label class="form-label" for="email">એડમિન ઇમેઇલ</label>
                 <div class="input-icon-wrap">
                     <i class="ri-mail-line input-icon"></i>
-                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', 'admin@lpsjunagadh.com') }}" placeholder="admin@lpsjunagadh.com" required autofocus autocomplete="username">
+                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', 'admin@lpsjunagadh.com') }}" placeholder="admin@lpsjunagadh.com" required autofocus autocomplete="off">
                 </div>
             </div>
 
@@ -155,7 +155,7 @@
                 <label class="form-label" for="password">પાસવર્ડ</label>
                 <div class="input-icon-wrap">
                     <i class="ri-lock-2-line input-icon"></i>
-                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••" required autocomplete="current-password">
+                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••" required autocomplete="off">
                     <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Toggle password visibility">
                         <i class="ri-eye-line" id="togglePasswordIcon"></i>
                     </button>
@@ -202,6 +202,9 @@
                 toggleIcon.className = isPassword ? 'ri-eye-off-line' : 'ri-eye-line';
             });
         }
+
+        document.querySelectorAll('form').forEach(f => f.setAttribute('autocomplete', 'off'));
+        document.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"])').forEach(i => i.setAttribute('autocomplete', 'off'));
     </script>
     @include('partials.toastr')
 </body>

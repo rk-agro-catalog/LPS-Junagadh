@@ -28,27 +28,27 @@
                 તમારા પ્રસંગની વિગતો નીચે દર્શાવો. ટ્રસ્ટ કાર્યાલય દ્વારા તુરંત તારીખ કન્ફર્મ કરવામાં આવશે.
             </p>
 
-            <form action="{{ route('booking.store') }}" method="POST">
+            <form action="{{ route('booking.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">અરજદારનું પૂરું નામ *</label>
-                        <input type="text" name="applicant_name" class="form-control" placeholder="નામ લખો..." required>
+                        <input type="text" name="applicant_name" class="form-control" placeholder="નામ લખો..." required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મોબાઈલ નંબર *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો મોબાઈલ નંબર" required>
+                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો મોબાઈલ નંબર" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">ઈમેઈલ એડ્રેસ (વૈકલ્પિક)</label>
-                        <input type="email" name="email" class="form-control" placeholder="email@example.com">
+                        <input type="email" name="email" class="form-control" placeholder="email@example.com" autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">ગામ / શહેર *</label>
-                        <input type="text" name="city_or_village" class="form-control" placeholder="દા.ત. જૂનાગઢ, જેતપુર..." required>
+                        <input type="text" name="city_or_village" class="form-control" placeholder="દા.ત. જૂનાગઢ, જેતપુર..." required autocomplete="off">
                     </div>
 
                     <div class="form-group">
@@ -87,17 +87,17 @@
 
                     <div class="form-group">
                         <label class="form-label">પ્રસંગ તારીખ (Event Date) *</label>
-                        <input type="date" name="event_date" class="form-control" min="{{ date('Y-m-d') }}" required>
+                        <input type="date" name="event_date" class="form-control" min="{{ date('Y-m-d') }}" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">અંદાજિત મહેમાનોની સંખ્યા *</label>
-                        <input type="number" name="approx_guests" class="form-control" placeholder="દા.ત. ૫૦૦, ૧૦૦૦" min="10" required>
+                        <input type="number" name="approx_guests" class="form-control" placeholder="દા.ત. ૫૦૦, ૧૦૦૦" min="10" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">જરૂરી રૂમ સંખ્યા</label>
-                        <input type="number" name="required_rooms" class="form-control" placeholder="રૂમની સંખ્યા" min="0" value="0">
+                        <input type="number" name="required_rooms" class="form-control" placeholder="રૂમની સંખ્યા" min="0" value="0" autocomplete="off">
                     </div>
 
                     <div class="form-group full-width">

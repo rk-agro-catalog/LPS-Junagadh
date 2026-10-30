@@ -30,23 +30,23 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.security.password') }}" method="POST">
+        <form action="{{ route('admin.security.password') }}" method="POST" autocomplete="off">
             @csrf
 
             <div class="form-group" style="margin-bottom: 1rem;">
                 <label class="form-label" style="font-size: 0.84rem; font-weight: 700; color: #334155;">હાલનો પાસવર્ડ (Current Password) *</label>
-                <input type="password" name="current_password" class="form-control" placeholder="હાલનો પાસવર્ડ દાખલ કરો" required>
+                <input type="password" name="current_password" class="form-control" placeholder="હાલનો પાસવર્ડ દાખલ કરો" autocomplete="off" required>
             </div>
 
             <div class="form-group" style="margin-bottom: 1rem;">
                 <label class="form-label" style="font-size: 0.84rem; font-weight: 700; color: #334155;">નવો પાસવર્ડ (New Password) *</label>
-                <input type="password" name="password" class="form-control" placeholder="ઓછામાં ઓછા ૮ અક્ષરનો પાસવર્ડ" required>
+                <input type="password" name="password" class="form-control" placeholder="ઓછામાં ઓછા ૮ અક્ષરનો પાસવર્ડ" autocomplete="off" required>
                 <small style="font-size: 0.74rem; color: #64748b; margin-top: 3px; display: block;">અક્ષરો, અંકો અને સ્પેશિયલ સિમ્બોલ (@, #, $, !) વાપરો.</small>
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
                 <label class="form-label" style="font-size: 0.84rem; font-weight: 700; color: #334155;">નવો પાસવર્ડ ફરીથી લખો (Confirm New Password) *</label>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="નવો પાસવર્ડ ફરી દાખલ કરો" required>
+                <input type="password" name="password_confirmation" class="form-control" placeholder="નવો પાસવર્ડ ફરી દાખલ કરો" autocomplete="off" required>
             </div>
 
             <button type="submit" class="admin-quick-pill primary" style="width: 100%; justify-content: center; font-size: 0.92rem; padding: 0.75rem; border: none; cursor: pointer;">

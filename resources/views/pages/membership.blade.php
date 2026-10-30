@@ -27,27 +27,27 @@
                 નીચેની તમામ વિગતો યોગ્ય રીતે ભરો જેથી આપની વિગતો સમાજ ડિરેક્ટરીમાં સુરક્ષિત રીતે સચવાયેલી રહે.
             </p>
 
-            <form action="{{ route('membership.store') }}" method="POST">
+            <form action="{{ route('membership.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">પૂરું નામ (પોતાનું નામ) *</label>
-                        <input type="text" name="full_name" class="form-control" placeholder="નામ લખો..." required>
+                        <input type="text" name="full_name" class="form-control" placeholder="નામ લખો..." autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">પિતા / પતિનું નામ</label>
-                        <input type="text" name="father_or_husband_name" class="form-control" placeholder="પિતા અથવા પતિનું નામ...">
+                        <input type="text" name="father_or_husband_name" class="form-control" placeholder="પિતા અથવા પતિનું નામ..." autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">અટક (Surname) *</label>
-                        <input type="text" name="surname" class="form-control" value="પટેલ" required>
+                        <input type="text" name="surname" class="form-control" value="પટેલ" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">લિંગ (Gender) *</label>
-                        <select name="gender" class="form-control" required>
+                        <select name="gender" class="form-control" autocomplete="off" required>
                             <option value="male">પુરૂષ (Male)</option>
                             <option value="female">મહિલા (Female)</option>
                         </select>
@@ -55,7 +55,7 @@
 
                     <div class="form-group">
                         <label class="form-label">બ્લડ ગ્રૂપ (Blood Group)</label>
-                        <select name="blood_group" class="form-control">
+                        <select name="blood_group" class="form-control" autocomplete="off">
                             <option value="">-- બ્લડ ગ્રૂપ પસંદ કરો --</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
@@ -70,42 +70,42 @@
 
                     <div class="form-group">
                         <label class="form-label">મૂળ ગામ (Native Village)</label>
-                        <input type="text" name="native_village" class="form-control" placeholder="દા.ત. વંથલી, કેશોદ, બિલખા...">
+                        <input type="text" name="native_village" class="form-control" placeholder="દા.ત. વંથલી, કેશોદ, બિલખા..." autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મોબાઈલ નંબર *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો મોબાઈલ નંબર" required>
+                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો મોબાઈલ નંબર" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">વોટ્સએપ નંબર</label>
-                        <input type="tel" name="whatsapp" class="form-control" placeholder="વોટ્સએપ નંબર">
+                        <input type="tel" name="whatsapp" class="form-control" placeholder="વોટ્સએપ નંબર" autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">વ્યવસાય / નોકરી / ખેતી</label>
-                        <input type="text" name="occupation" class="form-control" placeholder="દા.ત. વેપાર, નોકરી, ખેતી...">
+                        <input type="text" name="occupation" class="form-control" placeholder="દા.ત. વેપાર, નોકરી, ખેતી..." autocomplete="off">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">પરિવારના કુલ સભ્યોની સંખ્યા *</label>
-                        <input type="number" name="family_members_count" class="form-control" value="4" min="1" required>
+                        <input type="number" name="family_members_count" class="form-control" value="4" min="1" autocomplete="off" required>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">હાલનું રહેઠાણનું સરનામું *</label>
-                        <textarea name="current_address" rows="2" class="form-control" placeholder="સોસાયટી, રોડ, વિસ્તાર..." required></textarea>
+                        <textarea name="current_address" rows="2" class="form-control" placeholder="સોસાયટી, રોડ, વિસ્તાર..." autocomplete="off" required></textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">શહેર / તાલુકો *</label>
-                        <input type="text" name="city" class="form-control" value="જૂનાગઢ" required>
+                        <input type="text" name="city" class="form-control" value="જૂનાગઢ" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">પીનકોડ</label>
-                        <input type="text" name="pincode" class="form-control" placeholder="362001">
+                        <input type="text" name="pincode" class="form-control" placeholder="362001" autocomplete="off">
                     </div>
 
                     <div class="form-group full-width" style="margin-top: 0.5rem;">

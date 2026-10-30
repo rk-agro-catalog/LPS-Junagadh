@@ -17,8 +17,8 @@
                 <i class="ri-add-line"></i> + નવો કાર્યક્રમ ઉમેરો
             </a>
 
-            <form action="{{ route('admin.events') }}" method="GET" class="admin-search-form">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="કાર્યક્રમ નામ, સ્થળ..." class="form-control" style="width: 190px; font-size: 0.82rem; padding: 0.42rem 0.75rem;">
+            <form action="{{ route('admin.events') }}" method="GET" class="admin-search-form" autocomplete="off">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="કાર્યક્રમ નામ, સ્થળ..." autocomplete="off" class="form-control" style="width: 190px; font-size: 0.82rem; padding: 0.42rem 0.75rem;">
                 <button type="submit" class="admin-header-btn admin-header-btn-site" style="padding: 0.42rem 0.75rem;" title="Search">
                     <i class="ri-search-line"></i>
                 </button>

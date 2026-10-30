@@ -96,14 +96,14 @@
         </div>
 
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-            <form action="{{ route('admin.logs') }}" method="GET" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0;">
-                <select name="user_type" class="form-control" style="width: auto; padding: 0.42rem 0.75rem; font-size: 0.82rem;" onchange="this.form.submit()">
+            <form action="{{ route('admin.logs') }}" method="GET" autocomplete="off" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0;">
+                <select name="user_type" class="form-control" autocomplete="off" style="width: auto; padding: 0.42rem 0.75rem; font-size: 0.82rem;" onchange="this.form.submit()">
                     <option value="">તમામ યુઝર્સ</option>
                     <option value="public" {{ request('user_type') === 'public' ? 'selected' : '' }}>પબ્લિક સબમિશન</option>
                     <option value="admin" {{ request('user_type') === 'admin' ? 'selected' : '' }}>એડમિન પ્રવૃત્તિ</option>
                 </select>
 
-                <select name="device_type" class="form-control" style="width: auto; padding: 0.42rem 0.75rem; font-size: 0.82rem;" onchange="this.form.submit()">
+                <select name="device_type" class="form-control" autocomplete="off" style="width: auto; padding: 0.42rem 0.75rem; font-size: 0.82rem;" onchange="this.form.submit()">
                     <option value="">તમામ ડિવાઇસ</option>
                     <option value="Mobile" {{ request('device_type') === 'Mobile' ? 'selected' : '' }}>Mobile (મોબાઈલ)</option>
                     <option value="Desktop" {{ request('device_type') === 'Desktop' ? 'selected' : '' }}>Desktop / Laptop</option>
@@ -112,7 +112,7 @@
 
                 <div class="admin-search-box" style="margin: 0;">
                     <i class="ri-search-line"></i>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="નામ, ફોન, IP, વર્ણન શોધો..." style="width: 220px;">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="નામ, ફોન, IP, વર્ણન શોધો..." autocomplete="off" style="width: 220px;">
                 </div>
 
                 <button type="submit" class="admin-header-btn admin-header-btn-site" style="padding: 0.42rem 0.75rem; font-size: 0.82rem;">

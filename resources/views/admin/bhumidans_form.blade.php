@@ -27,33 +27,33 @@
     @endif
 
     <div class="admin-card">
-        <form action="{{ $mode === 'create' ? route('admin.bhumidans.store') : route('admin.bhumidans.updateRecord', $bhumidan->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $mode === 'create' ? route('admin.bhumidans.store') : route('admin.bhumidans.updateRecord', $bhumidan->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
             @csrf
 
             <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label">દાતાશ્રીનું પૂરું નામ *</label>
-                    <input type="text" name="donor_name" class="form-control" value="{{ old('donor_name', $bhumidan->donor_name) }}" placeholder="દા.ત. શ્રી રમેશભાઈ પટેલ" required>
+                    <input type="text" name="donor_name" class="form-control" value="{{ old('donor_name', $bhumidan->donor_name) }}" placeholder="દા.ત. શ્રી રમેશભાઈ પટેલ" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">મોબાઈલ નંબર *</label>
-                    <input type="tel" name="phone" class="form-control" value="{{ old('phone', $bhumidan->phone) }}" placeholder="૧૦ અંકનો નંબર" required>
+                    <input type="tel" name="phone" class="form-control" value="{{ old('phone', $bhumidan->phone) }}" placeholder="૧૦ અંકનો નંબર" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">મૂળ ગામ</label>
-                    <input type="text" name="village" class="form-control" value="{{ old('village', $bhumidan->village) }}" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર...">
+                    <input type="text" name="village" class="form-control" value="{{ old('village', $bhumidan->village) }}" placeholder="દા.ત. વંથલી, કેશોદ, વિસાવદર..." autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">હાલનું શહેર *</label>
-                    <input type="text" name="city" class="form-control" value="{{ old('city', $bhumidan->city ?? 'જૂનાગઢ') }}" required>
+                    <input type="text" name="city" class="form-control" value="{{ old('city', $bhumidan->city ?? 'જૂનાગઢ') }}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">સમર્પિત ચોરસ વાર સંખ્યા *</label>
-                    <input type="number" id="sqYardsInput" name="sq_yards" class="form-control" value="{{ old('sq_yards', $bhumidan->sq_yards ?? 1) }}" min="1" max="5000" required>
+                    <input type="number" id="sqYardsInput" name="sq_yards" class="form-control" value="{{ old('sq_yards', $bhumidan->sq_yards ?? 1) }}" min="1" max="5000" autocomplete="off" required>
                     <div style="font-size: 0.78rem; color: #b45309; font-weight: 700; margin-top: 0.25rem;">
                         (૧ ચોરસ વાર = રૂા. ૨,૫૦૦/-)
                     </div>
@@ -68,7 +68,7 @@
 
                 <div class="form-group">
                     <label class="form-label">ચુકવણી પદ્ધતિ (Payment Method) *</label>
-                    <select name="payment_method" class="form-control" required>
+                    <select name="payment_method" class="form-control" autocomplete="off" required>
                         <option value="Cash" {{ old('payment_method', $bhumidan->payment_method) == 'Cash' ? 'selected' : '' }}>રોકડ (Cash - કાર્યાલયે)</option>
                         <option value="Cheque" {{ old('payment_method', $bhumidan->payment_method) == 'Cheque' ? 'selected' : '' }}>ચેક (Cheque)</option>
                         <option value="UPI" {{ old('payment_method', $bhumidan->payment_method) == 'UPI' ? 'selected' : '' }}>UPI (GPay/PhonePe/Paytm)</option>
@@ -78,7 +78,7 @@
 
                 <div class="form-group">
                     <label class="form-label">ટ્રાન્ઝેક્શન / ચેક નંબર</label>
-                    <input type="text" name="transaction_id" class="form-control" value="{{ old('transaction_id', $bhumidan->transaction_id) }}" placeholder="ચેક નંબર અથવા UPI ID...">
+                    <input type="text" name="transaction_id" class="form-control" value="{{ old('transaction_id', $bhumidan->transaction_id) }}" placeholder="ચેક નંબર અથવા UPI ID..." autocomplete="off">
                 </div>
 
                 <div class="form-group full-width">
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                     @endif
-                    <input type="file" name="payment_screenshot" class="form-control" accept="image/*,application/pdf">
+                    <input type="file" name="payment_screenshot" class="form-control" accept="image/*,application/pdf" autocomplete="off">
                     <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">
                         નવી સ્લિપ બદલવા અથવા અપલોડ કરવા માટે ફાઇલ સિલેક્ટ કરો (JPG, PNG, WebP, PDF - મહત્તમ 5MB)
                     </div>
@@ -102,7 +102,7 @@
 
                 <div class="form-group">
                     <label class="form-label">રસીદ સ્ટેટસ (Verification Status) *</label>
-                    <select name="status" class="form-control" required>
+                    <select name="status" class="form-control" autocomplete="off" required>
                         <option value="verified" {{ old('status', $bhumidan->status) == 'verified' ? 'selected' : '' }}>સ્વીકૃત & પ્રમાણિત (Verified)</option>
                         <option value="pending" {{ old('status', $bhumidan->status) == 'pending' ? 'selected' : '' }}>પેન્ડિંગ (Pending)</option>
                         <option value="completed" {{ old('status', $bhumidan->status) == 'completed' ? 'selected' : '' }}>સંપૂર્ણ (Completed)</option>
@@ -118,7 +118,7 @@
 
                 <div class="form-group full-width">
                     <label class="form-label">વિશેષ નોંધ / સંકલ્પ</label>
-                    <textarea name="notes" rows="2" class="form-control" placeholder="દાતાશ્રી તરફથી કોઈ ખાસ નોંધ અથવા સ્મૃતિ સંકલ્પ...">{{ old('notes', $bhumidan->notes) }}</textarea>
+                    <textarea name="notes" rows="2" class="form-control" placeholder="દાતાશ્રી તરફથી કોઈ ખાસ નોંધ અથવા સ્મૃતિ સંકલ્પ..." autocomplete="off">{{ old('notes', $bhumidan->notes) }}</textarea>
                 </div>
 
                 <div class="form-group full-width" style="margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">

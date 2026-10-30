@@ -27,18 +27,18 @@
     @endif
 
     <div class="admin-card">
-        <form action="{{ $mode === 'create' ? route('admin.events.store') : route('admin.events.update', $event->id) }}" method="POST">
+        <form action="{{ $mode === 'create' ? route('admin.events.store') : route('admin.events.update', $event->id) }}" method="POST" autocomplete="off">
             @csrf
 
             <div class="form-grid">
                 <div class="form-group full-width">
                     <label class="form-label">કાર્યક્રમ શીર્ષક (Event Title) *</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title', $event->title) }}" placeholder="દા.ત. ભવ્ય સ્નેહમિલન & સંકુલ ભૂમિ પૂજન સમારોહ..." required>
+                    <input type="text" name="title" class="form-control" value="{{ old('title', $event->title) }}" placeholder="દા.ત. ભવ્ય સ્નેહમિલન & સંકુલ ભૂમિ પૂજન સમારોહ..." autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">કાર્યક્રમ કેટેગરી *</label>
-                    <select name="category" class="form-control" required>
+                    <select name="category" class="form-control" autocomplete="off" required>
                         <option value="સ્નેહમિલન" {{ old('category', $event->category) == 'સ્નેહમિલન' ? 'selected' : '' }}>સ્નેહમિલન & સભા (Gathering)</option>
                         <option value="સામાજિક" {{ old('category', $event->category) == 'સામાજિક' ? 'selected' : '' }}>સામાજિક ઉત્સવ (Social Event)</option>
                         <option value="આરોગ્ય" {{ old('category', $event->category) == 'આરોગ્ય' ? 'selected' : '' }}>રક્તદાન & આરોગ્ય કેમ્પ (Health Camp)</option>
@@ -50,37 +50,37 @@
 
                 <div class="form-group">
                     <label class="form-label">તારીખ (Event Date) *</label>
-                    <input type="date" name="event_date" class="form-control" value="{{ old('event_date', optional($event->event_date)->format('Y-m-d') ?? $event->event_date) }}" required>
+                    <input type="date" name="event_date" class="form-control" value="{{ old('event_date', optional($event->event_date)->format('Y-m-d') ?? $event->event_date) }}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">સમય (Event Time)</label>
-                    <input type="text" name="event_time" class="form-control" value="{{ old('event_time', $event->event_time ?? 'સવારે ૯:૦૦ કલાકે') }}" placeholder="દા.ત. સાંજે ૫:૩૦ કલાકે">
+                    <input type="text" name="event_time" class="form-control" value="{{ old('event_time', $event->event_time ?? 'સવારે ૯:૦૦ કલાકે') }}" placeholder="દા.ત. સાંજે ૫:૩૦ કલાકે" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">સ્થળ (Venue) *</label>
-                    <input type="text" name="venue" class="form-control" value="{{ old('venue', $event->venue ?? 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ સંકુલ, ખલીલપુર ચોકડી પાસે, જૂનાગઢ') }}" required>
+                    <input type="text" name="venue" class="form-control" value="{{ old('venue', $event->venue ?? 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ સંકુલ, ખલીલપુર ચોકડી પાસે, જૂનાગઢ') }}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label class="form-label">બેનર / ફોટો URL (Image URL)</label>
-                    <input type="url" name="image_url" class="form-control" value="{{ old('image_url', $event->image_url) }}" placeholder="https://images.unsplash.com/... અથવા ઇમેજ લિંક">
+                    <input type="url" name="image_url" class="form-control" value="{{ old('image_url', $event->image_url) }}" placeholder="https://images.unsplash.com/... અથવા ઇમેજ લિંક" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">આયોજક (Organizer)</label>
-                    <input type="text" name="organizer" class="form-control" value="{{ old('organizer', $event->organizer ?? 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ') }}">
+                    <input type="text" name="organizer" class="form-control" value="{{ old('organizer', $event->organizer ?? 'શ્રી સમસ્ત લેઉવા પટેલ સમાજ ટ્રસ્ટ - જૂનાગઢ') }}" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">સંપર્ક સૂત્ર / હેલ્પલાઇન</label>
-                    <input type="text" name="contact_person" class="form-control" value="{{ old('contact_person', $event->contact_person ?? 'ટ્રસ્ટ કાર્યાલય: 909 33 909 34') }}">
+                    <input type="text" name="contact_person" class="form-control" value="{{ old('contact_person', $event->contact_person ?? 'ટ્રસ્ટ કાર્યાલય: 909 33 909 34') }}" autocomplete="off">
                 </div>
 
                 <div class="form-group full-width">
                     <label class="form-label">કાર્યક્રમ વિગત / આમંત્રણ સંદેશ (Description)</label>
-                    <textarea name="description" rows="4" class="form-control" placeholder="કાર્યક્રમનો ઉદ્દેશ્ય, ઉપસ્થિત મહાનુભાવો અને સમસ્ત સમાજને આમંત્રણ વિગત...">{{ old('description', $event->description) }}</textarea>
+                    <textarea name="description" rows="4" class="form-control" placeholder="કાર્યક્રમનો ઉદ્દેશ્ય, ઉપસ્થિત મહાનુભાવો અને સમસ્ત સમાજને આમંત્રણ વિગત..." autocomplete="off">{{ old('description', $event->description) }}</textarea>
                 </div>
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">

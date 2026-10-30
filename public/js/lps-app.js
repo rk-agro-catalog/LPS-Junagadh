@@ -196,6 +196,29 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+
+  // Enforce autocomplete="off" on all forms and interactive inputs across the entire site
+  function disableGlobalAutocomplete() {
+    document.querySelectorAll('form').forEach(function (form) {
+      form.setAttribute('autocomplete', 'off');
+    });
+    document.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), textarea, select').forEach(function (input) {
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('autocorrect', 'off');
+      input.setAttribute('autocapitalize', 'off');
+      input.setAttribute('spellcheck', 'false');
+    });
+  }
+
+  disableGlobalAutocomplete();
+  if (window.MutationObserver) {
+    const autoObserver = new MutationObserver(function () {
+      disableGlobalAutocomplete();
+    });
+    if (document.body) {
+      autoObserver.observe(document.body, { childList: true, subtree: true });
+    }
+  }
 });
 
 // Digital Receipt Print Trigger

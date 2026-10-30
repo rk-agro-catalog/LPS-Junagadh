@@ -81,15 +81,15 @@
                     <i class="ri-smartphone-line"></i> ૧-ક્લિક UPI થી ચુકવો (GPay / PhonePe)
                 </a>
 
-                <form action="{{ route('bhumidan.store') }}" method="POST">
+                <form action="{{ route('bhumidan.store') }}" method="POST" autocomplete="off">
                     @csrf
                     <input type="hidden" name="sq_yards" id="formSqYards" value="1">
                     <input type="hidden" name="payment_method" value="UPI">
                     <input type="hidden" name="city" value="જૂનાગઢ">
                     
                     <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.75rem;">
-                        <input type="text" name="donor_name" class="form-control" placeholder="તમારું પૂરું નામ (દાતાશ્રી)" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
-                        <input type="tel" name="phone" class="form-control" placeholder="મોબાઈલ નંબર" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
+                        <input type="text" name="donor_name" class="form-control" placeholder="તમારું પૂરું નામ (દાતાશ્રી)" autocomplete="off" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
+                        <input type="tel" name="phone" class="form-control" placeholder="મોબાઈલ નંબર" autocomplete="off" required style="min-height: 40px; padding: 0.55rem 0.85rem; font-size: 0.88rem;">
                     </div>
 
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 0.92rem; padding: 0.62rem; font-weight: 600;">
@@ -609,22 +609,22 @@
                 નીચેની વિગતો ભરીને મોકલો, કાર્યાલય દ્વારા આપનો તુરંત સંપર્ક કરવામાં આવશે.
             </p>
 
-            <form action="{{ route('contact.store') }}" method="POST">
+            <form action="{{ route('contact.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">આપનું પૂરું નામ *</label>
-                        <input type="text" name="name" class="form-control" placeholder="નામ લખો" required>
+                        <input type="text" name="name" class="form-control" placeholder="નામ લખો" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">મોબાઈલ નંબર *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" required>
+                        <input type="tel" name="phone" class="form-control" placeholder="૧૦ અંકનો નંબર" autocomplete="off" required>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">વિષય / પૂછપરછ પ્રકાર *</label>
-                        <select name="subject" class="form-control" required>
+                        <select name="subject" class="form-control" autocomplete="off" required>
                             <option value="ભૂમિદાન અંગે માહિતી">ભૂમિદાન યોજના અંગે માહિતી</option>
                             <option value="વિભાગ-૧ હોલ/પ્લોટ બુકિંગ">વિભાગ-૧ હોલ/પ્લોટ બુકિંગ</option>
                             <option value="વિભાગ-૨ મધ્યમ વર્ગ સુવિધા">વિભાગ-૨ મધ્યમ વર્ગ સુવિધા</option>
@@ -635,7 +635,7 @@
 
                     <div class="form-group full-width">
                         <label class="form-label">સંદેશ / પ્રશ્ન વિગત *</label>
-                        <textarea name="message" rows="3" class="form-control" placeholder="તમારી પૂછપરછ વિગતવાર અહીં લખો..." required></textarea>
+                        <textarea name="message" rows="3" class="form-control" placeholder="તમારી પૂછપરછ વિગતવાર અહીં લખો..." autocomplete="off" required></textarea>
                     </div>
 
                     <div class="form-group full-width">

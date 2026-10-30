@@ -17,8 +17,8 @@
                 <i class="ri-add-line"></i> + નવી ગેલેરી આઇટમ
             </a>
 
-            <form action="{{ route('admin.gallery') }}" method="GET" class="admin-search-form">
-                <select name="category" class="form-control" style="font-size: 0.82rem; padding: 0.42rem 0.65rem; width: 150px; border-radius: 8px;" onchange="this.form.submit()">
+            <form action="{{ route('admin.gallery') }}" method="GET" class="admin-search-form" autocomplete="off">
+                <select name="category" class="form-control" autocomplete="off" style="font-size: 0.82rem; padding: 0.42rem 0.65rem; width: 150px; border-radius: 8px;" onchange="this.form.submit()">
                     <option value="">બધી કેટેગરી</option>
                     <option value="events" {{ request('category') == 'events' ? 'selected' : '' }}>કાર્યક્રમો (Events)</option>
                     <option value="bhumipujan" {{ request('category') == 'bhumipujan' ? 'selected' : '' }}>ભૂમિ પૂજન</option>
